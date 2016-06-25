@@ -1,0 +1,13 @@
+.project {text-align: center;}
+.project img {
+	width:100px;
+	height:100px;
+}
+.project div.img-circle {
+	background: #ccc;
+	color: #fff;
+	width:100px;
+	height:100px;
+	line-height: 100px;
+	margin: 0 auto;
+}

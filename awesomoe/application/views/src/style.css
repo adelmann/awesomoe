@@ -1,0 +1,51 @@
+.ninja {display: none;}
+
+h4 {word-wrap: break-word;}
+a.fnc {cursor: pointer;}
+.noavatar{
+	background:#ccc;
+	width: 20px;
+	height: 20px;
+	display: block;
+	border-radius: 20px;
+	text-align: center;
+	text-transform: uppercase;
+	line-height:20px;
+}
+.user-image-small {width:25px;height:25px;}
+.workflowtitle {min-height: 5em;}
+.image.small img{width:20px;height:20px;}
+
+.headtasks {border-top:2px solid;}
+.headtasks.box-primary{border-top-color:#3c8dbc}
+.headtasks.box-info{border-top-color:#00c0ef}
+.headtasks.box-danger{border-top-color:#dd4b39}
+.headtasks.box-warning{border-top-color:#f39c12}
+.headtasks.box-success{border-top-color:#00a65a}
+.headtasks.box-default{border-top-color:#d2d6de}
+
+.startindex {
+    width:25px;
+    height:25px;
+    float:left;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

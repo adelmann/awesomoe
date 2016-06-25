@@ -1,0 +1,35 @@
+body {
+    margin: 0px !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
+a{
+    text-decoration: none;
+}
+.wrapper {}
+
+header,section,footer {
+    padding: 15px;
+}
+section {
+    background: #ecf0f5;
+}
+footer {
+    font-size:11px;
+}
+
+.skin-blue header {
+    background-color: #3c8dbc;
+    color: #ffffff;
+}
+    .skin-blue header a {
+        color: #fff;
+        font-weight: bold;
+    }
+
+.skin-blue footer {
+
+}
+
