@@ -50,6 +50,7 @@ class aw_notification extends aw_base
 				GROUP BY users.awid;
 		";
 		$oResult = $this->_db->query($sSelectUser,'assoc');
+		echo $sSelectUser.'<hr>';
         return $oResult;
     }
 
@@ -156,11 +157,32 @@ class aw_notification extends aw_base
 
 		$aUserIds = $this->getAllUsers4Notification($iNotificationType);
         foreach ($aUserIds as $key=>$user) {
-            if ($user['awnotification2state'] == '1' || $user['awnotification2assignee'] == '1' || $user['awnotification2worklog'] == '1' || $user['awnotification2comment'] == '1' || $user['awnotification2description'] == '1' || $user['awnotification2newtask'] == '1'){
+            if (
+				(isset($user['awnotification2state']) && $user['awnotification2state'] == '1') ||
+				(isset($user['awnotification2assignee']) && $user['awnotification2assignee'] == '1') ||
+				(isset($user['awnotification2worklog']) && $user['awnotification2worklog'] == '1') ||
+				(isset($user['awnotification2comment']) && $user['awnotification2comment'] == '1') ||
+				(isset($user['awnotification2description']) && $user['awnotification2description'] == '1') ||
+				(isset($user['awnotification2newtask']) && $user['awnotification2newtask'] == '1')
+			){
                 $this->addDBNotification($user,$iNotificationType);
-            } elseif ($user['awnotification2state'] == '2' || $user['awnotification2assignee'] == '2' || $user['awnotification2worklog'] == '2' || $user['awnotification2comment'] == '2' || $user['awnotification2description'] == '2' || $user['awnotification2newtask'] == '2'){
+            } elseif (
+				(isset($user['awnotification2state']) && $user['awnotification2state'] == '2') ||
+				(isset($user['awnotification2assignee']) && $user['awnotification2assignee'] == '2') ||
+				(isset($user['awnotification2worklog']) && $user['awnotification2worklog'] == '2') ||
+				(isset($user['awnotification2comment']) && $user['awnotification2comment'] == '2') ||
+				(isset($user['awnotification2description']) && $user['awnotification2description'] == '2') ||
+				(isset($user['awnotification2newtask']) && $user['awnotification2newtask'] == '2')
+			){
                 $this->sendMailNotification($user,$iNotificationType);
-            } elseif ($user['awnotification2state'] == '3' || $user['awnotification2assignee'] == '3'  || $user['awnotification2worklog'] == '3' || $user['awnotification2comment'] == '3' || $user['awnotification2description'] == '3' || $user['awnotification2newtask'] == '3'){
+            } elseif (
+				(isset($user['awnotification2state']) && $user['awnotification2state'] == '3') ||
+				(isset($user['awnotification2assignee']) && $user['awnotification2assignee'] == '3')  ||
+				(isset($user['awnotification2worklog']) && $user['awnotification2worklog'] == '3') ||
+				(isset($user['awnotification2comment']) && $user['awnotification2comment'] == '3') ||
+				(isset($user['awnotification2description']) && $user['awnotification2description'] == '3') ||
+				(isset($user['awnotification2newtask']) && $user['awnotification2newtask'] == '3')
+			){
 				$this->addDBNotification($user,$iNotificationType);
                 $this->sendMailNotification($user,$iNotificationType);
             }

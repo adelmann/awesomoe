@@ -195,7 +195,6 @@ class aw_tasks extends aw_base
 				}
 			}
 			$sUpdateTask .= "awupdate='".date("Y-m-d H:i:s")."' WHERE awid='".$this->getParameter('awid')."';";
-			die($sUpdateTask);
 			$oNotification = new aw_notification();
 			$oNotification->notificationHandler(4);
 
@@ -240,6 +239,9 @@ class aw_tasks extends aw_base
 
 						$count++;
 					} else {
+						if ($value == '') {
+							$value = '0';
+						}
 						$keynames .= $key.",";
 						$keyvals .= "'".$value."',";
 						$count++;
