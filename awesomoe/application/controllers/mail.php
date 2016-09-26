@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Class mail
+ */
 class mail extends aw_mail
 {
     public function __construct() {
