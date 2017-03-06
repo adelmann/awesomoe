@@ -1,7 +1,12 @@
 <?php
+
+/**
+ * Class config
+ */
 class config extends aw_config
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         global $smarty;
         $oBase = new aw_base();
@@ -12,17 +17,15 @@ class config extends aw_config
             } elseif (!empty($oBase->getParameter('cl')) == "config" && $oBase->getParameter('fnc') == "mail") {
                 $smarty->display('tpl/administration/config-mail.tpl');
             }
-        }
-        else {
+        } else {
             if ($oBase->getParameter('fnc') == 'save' && $oBase->getParameter('cl') == 'config') {
                 $bResultStage = $this->save();
-                if ($oBase->getParameter('fnc') == "mail"){
+                if ($oBase->getParameter('fnc') == "mail") {
                     header('Location: index.php?cl=config');
                 } else {
                     header('Location: index.php?cl=config&fnc=mail');
                 }
             }
         }
-
     }
 }

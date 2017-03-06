@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class aw_auth
+ */
 class aw_auth extends aw_base
 {
 	public function checklogin() {
