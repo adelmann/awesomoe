@@ -149,19 +149,33 @@ class install
 			$this->translateContent('TOLOGIN');
 			echo "</a>";
 		}  elseif($this->position == 999) {
-			$this->deleteDir($base_url.'setup/');
-			header('Location: '.$base_url);
+			$base_url="http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
+			$this->deleteDirectory($base_url);
+			$redirectURL = str_replace('setup/','',$base_url);
+			header('Location: '.$redirectURL);
 		}
 
 		include "footer.tpl";
-
 	}
 
-	public function deleteDir($path) {
-		return is_file($path) ?
-			@unlink($path) :
-			array_map(__FUNCTION__, glob($path.'/*')) == @rmdir($path);
+	public function deleteDirectory($dirPath) {
+		if (is_dir($dirPath)) {
+			$objects = scandir($dirPath);
+			foreach ($objects as $object) {
+				if ($object != "." && $object !="..") {
+					if (filetype($dirPath . DIRECTORY_SEPARATOR . $object) == "dir") {
+						deleteDirectory($dirPath . DIRECTORY_SEPARATOR . $object);
+					} else {
+						unlink($dirPath . DIRECTORY_SEPARATOR . $object);
+					}
+				}
+			}
+			reset($objects);
+			rmdir($dirPath);
+		}
 	}
+
+
 	public function checkDB() {
 		try {
 			$dbh = new PDO("mysql:host=$this->server;dbname=$this->database",$this->username,$this->password);
