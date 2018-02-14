@@ -64,9 +64,10 @@ $aLang = array(
         <h1>Installation erfolgreich</h1>
         <hr>
         <div style=\'color:#ee0000;\'>
-            <p>Bitte löschen Sie das Installationsverzeichnis komplett. Oder klicken <b>HIER</b> zum automatischen löschen.</p>
+            <p>Bitte löschen Sie das Installationsverzeichnis komplett.</p>
         </div>
     ',
+    'DELSETUP'                  => 'SETUP jetzt löschen',
     'TOLOGIN'                   => 'Zum Login',
 
 

@@ -144,15 +144,23 @@ class install
 			$base_url = str_replace('setup/','',$base_url);
 
 			$this->translateContent('INSTALLDONE');
+			echo "<a href='index.php?step=999' class='btn btn-danger'>";$this->translateContent('DELSETUP');echo "</a><br>";
 			echo "<a href='".$base_url."' class='btn btn-primary'>";
 			$this->translateContent('TOLOGIN');
 			echo "</a>";
+		}  elseif($this->position == 999) {
+			$this->deleteDir($base_url.'setup/');
 		}
 
 		include "footer.tpl";
 
 	}
 
+	public function deleteDir($path) {
+		return is_file($path) ?
+			@unlink($path) :
+			array_map(__FUNCTION__, glob($path.'/*')) == @rmdir($path);
+	}
 	public function checkDB() {
 		try {
 			$dbh = new PDO("mysql:host=$this->server;dbname=$this->database",$this->username,$this->password);
