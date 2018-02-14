@@ -150,6 +150,7 @@ class install
 			echo "</a>";
 		}  elseif($this->position == 999) {
 			$this->deleteDir($base_url.'setup/');
+			header('Location: '.$base_url);
 		}
 
 		include "footer.tpl";
