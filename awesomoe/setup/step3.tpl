@@ -2,7 +2,7 @@
 	if ($this->dberror) {
 ?>
 	<div class="alert alert-warning" role="alert">
-		<p>Es konnte keine Verbindung zur Datenbank hergestellt werden!</p>
+		<p><?php $this->translateContent('NODBCONNECTION'); ?></p>
 		<p>Fehler:</p>
 		<p>
 <?php
@@ -33,5 +33,5 @@
 	<input type="password" name="dbpwd" class="form-control" id="basic-url" aria-describedby="basic-addon3">
 </div>
 <input type="hidden" name="step" value="4">
-<input type="submit" class="btn btn-primary" value="Zugang prüfen und weiter"/>
+<input type="submit" class="btn btn-primary" value="<?php $this->translateContent('CHECKANDNEXT'); ?>"/>
 </form>

@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    awesomoe by <a href="https://adelmann-solutions.com">adelmann-solutions.com</a>
+                    &copy; 2018 by <a href="http://awesomoe.de">awesomoe</a>
                 </div>
             </div>
         </div>
