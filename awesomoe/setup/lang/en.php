@@ -18,6 +18,7 @@ $aLang = array(
                                     <p>Please be carefull to delete the setup folder after install.</p>
                                     <p>Problems? You need help? Contact us under: <a href="http://awesomoe.de" target="_blank">http://awesomoe.de</a></p>
                                   ',
+    'STEP1INLANG'             => 'Install awesomoe in language (default language)',
     'PHP2LOW'                 => 'The PHP version is to low. You will get errors!',
     'PHPOKAY'                 => 'The PHP version is okay.',
     'mediaCHMODOK'            => '/media have correct rights.',
@@ -69,7 +70,9 @@ $aLang = array(
     ',
     'DELSETUP'                  => 'Delete SETUP now',
     'TOLOGIN'                   => 'Login now',
-
+    'LANGDE'                    => 'German',
+    'LANGEN'                    => 'English',
+    'STEP1DEFAULTLANG'          => 'If this is checked all users are shown setted language in case they haven´t configed it in their profile.',
 
 
 

@@ -18,6 +18,7 @@ $aLang = array(
                                     <p>Bitte beachten Sie, dass das Setup Verzeichnis nach der Installation vollständig gelöscht wird.</p>
                                     <p>Bei Problemen zur Installation oder zu awesomoe im allgemeinen finden Sie Hilfe unter: <a href="http://awesomoe.de" target="_blank">http://awesomoe.de</a></p>
                                   ',
+    'STEP1INLANG'             => 'Awesomoe in folgender Sprache installieren (Wird Standard Sprache)',
     'PHP2LOW'                 => 'Die vorhandene PHP Version liegt unter der empfohlenen Version. Es kann dadurch zu Fehlern kommen!',
     'PHPOKAY'                 => 'Die PHP Version sollte passen.',
     'mediaCHMODOK'            => '/media hat die korrekten Schreibrechte.',
@@ -69,6 +70,9 @@ $aLang = array(
     ',
     'DELSETUP'                  => 'SETUP jetzt löschen',
     'TOLOGIN'                   => 'Zum Login',
+    'LANGDE'                    => 'Deutsch',
+    'LANGEN'                    => 'Englisch',
+    'STEP1DEFAULTLANG'          => 'Sofern diese Konfiguration aktiv ist, wird die Sprache dem Benutzer als Standart Sprache angezeigt, sofern er in seinem Profil nicht eine andere ausgewählt hat.',
 
 
 

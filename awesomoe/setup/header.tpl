@@ -38,6 +38,11 @@
         <div class="navbar-header">
             <img src="../media/system/logo-transparent-bright.png" />
         </div>
+
+        <ul class="nav navbar-nav navbar-right" id="lngSwitch">
+            <li><a href="#" rel="de"><img src="../media/system/de.png" /></a></li>
+            <li><a href="#" rel="en"><img src="../media/system/en.png" /></a></li>
+        </ul>
     </div>
 </nav>
 

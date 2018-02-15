@@ -21,14 +21,21 @@ class install
 		$config['def_lang'] = 'de';
 		/* Auto detect language for user */
 		$lang_code 		= substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
-		$auto_lang 		=  '/lang/'. $lang_code . ".php";
-		$default_lang 	=  '/lang/de.php';
-		if(file_exists($auto_lang)) {
-			define('LANGUAGE', $auto_lang);
+		$auto_lang 		=  'lang/'. $lang_code . ".php";
+		$default_lang 	=  'lang/de.php';
+
+		if (isset($_COOKIE["awesomoeSetup"])) {
+			define('LANGUAGE', 'lang/'.$_COOKIE["awesomoeSetup"].'.php');
 		} else {
-			define('LANGUAGE', $default_lang);
+			if(file_exists($auto_lang)) {
+				define('LANGUAGE', $auto_lang);
+			} else {
+				define('LANGUAGE', $default_lang);
+			}
 		}
+
 		require_once(LANGUAGE);
+
 		$this->_alang = $aLang;
 
 
@@ -216,6 +223,10 @@ class install
 			echo $ident;
 		}
 		echo $this->_alang[$ident];
+	}
+
+	public function isLangActive($sLang) {
+
 	}
 }
 ?>
