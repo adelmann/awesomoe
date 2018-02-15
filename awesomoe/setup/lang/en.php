@@ -72,10 +72,6 @@ $aLang = array(
     'TOLOGIN'                   => 'Login now',
     'LANGDE'                    => 'German',
     'LANGEN'                    => 'English',
-    'STEP1DEFAULTLANG'          => 'If this is checked all users are shown setted language in case they haven´t configed it in their profile.',
-
-
-
 
 
 );

@@ -72,7 +72,6 @@ $aLang = array(
     'TOLOGIN'                   => 'Zum Login',
     'LANGDE'                    => 'Deutsch',
     'LANGEN'                    => 'Englisch',
-    'STEP1DEFAULTLANG'          => 'Sofern diese Konfiguration aktiv ist, wird die Sprache dem Benutzer als Standart Sprache angezeigt, sofern er in seinem Profil nicht eine andere ausgewählt hat.',
 
 
 

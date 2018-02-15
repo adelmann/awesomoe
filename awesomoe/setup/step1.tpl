@@ -6,16 +6,14 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="language"><?php $this->translateContent('STEP1INLANG');?></label>
-                <select name="language" class="form-control">
-                    <option value="de"><?php $this->translateContent('LANGDE');?></option>
-                    <option value="en"><?php $this->translateContent('LANGEN');?></option>
-                </select>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="language"><?php $this->translateContent('STEP1DEFAULTLANG');?></label>
-                <input type="checkbox" name="defaultLangActive" class="form-control"/>
+                <select name="language" class="form-control">
+                    <option value="de"><?php $this->translateContent('LANGDE');?></option>
+                    <option value="en"><?php $this->translateContent('LANGEN');?></option>
+                </select>
             </div>
         </div>
     </div>
