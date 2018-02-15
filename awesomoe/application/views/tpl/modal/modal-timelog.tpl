@@ -3,7 +3,6 @@
 		<div class="modal-content">
 			<form name="worklog" id="modalworklog" class="modalform">
 				{if isset($oWorklogs2Edit)}
-					
 					<input type="hidden" name="awprojectid" value="{$oWorklogs2Edit.awprojectid}" />
 					<input type="hidden" name="awtaskid" value="{$oWorklogs2Edit.awtaskid}" />
 					<input type="hidden" name="awid" value="{$oWorklogs2Edit.awid}" />
@@ -14,12 +13,13 @@
 					<input type="hidden" name="awtaskid" value="{$task}" />
 					<input type="hidden" name="cl" value="worklog" />
 				{/if}
+
 				<div class="modal-header">
 					<button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
 					<h4 class="modal-title">{awmultilang ident="WORKLOGFORM"}</h4>
 				</div>
+
 				<div class="modal-body">
-					
 					<div class="box-body">
 						<div class="form-group">
 							<label for="awdesc">{awmultilang ident="AWTIMELOGDESC"}</label>

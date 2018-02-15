@@ -8,11 +8,8 @@
         <!-- Default to the left --> 
         <strong>Copyright &copy; 2015 <a href="{$sCopyrightLink}">{$sCopyright}</a>.</strong>
       </footer>
-
     </div><!-- ./wrapper -->
 
- 
-  
 	<!-- jQuery 2.1.3 -->
     <script src="{$tpldir}src/themefiles/plugins/jQuery/jQuery-2.1.3.min.js"></script>
     <!-- jQuery UI 1.11.2 -->

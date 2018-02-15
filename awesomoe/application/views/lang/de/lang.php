@@ -105,6 +105,7 @@ $aLang = array(
 'MYTASKS'                                => 'Meine Tasks',
 
 // PROJECTS
+'NOPROJECTAVAILABLE'                     => 'Kein Projekt verfügbar',
 'NEWPROJECT'                             => 'neues Projekt',
 // ADD
 'PREFIX'                                 => 'Prefix',

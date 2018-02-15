@@ -18,7 +18,6 @@
 		</div>
 
 		<div class="col-sm-10">
-
 			{$comment.awdesc}
 		</div>
 		<div class="col-sm-12">

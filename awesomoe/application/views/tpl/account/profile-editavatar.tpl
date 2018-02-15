@@ -5,7 +5,6 @@
 	<section class="content-header">
 		<h1>
 			{awmultilang ident="PROFILE"} - {awmultilang ident="EDITAVATAR"}
-			<small>Optional description</small>
 		</h1>
 		{include file="tpl/breadcrumb.tpl"}
 	</section>

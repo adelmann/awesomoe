@@ -34,7 +34,6 @@
     <![endif]-->
   </head>
   <body class="{$sSkin} fixed">
-	
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -52,40 +51,6 @@
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-			{*
-              <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <!-- Menu toggle button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-envelope-o"></i>
-                  <span class="label label-success">4</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="header">{awmultilang ident="YOUHAVE"} 4 {awmultilang ident="MESSAGES"}</li>
-                  <li>
-                    <!-- inner menu: contains the messages -->
-                    <ul class="menu">
-                      <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <!-- User Image -->
-                            <img src="{$mediadir}/profile/{$oUser->getUserAvatar($aActUser.awid)}" class="img-circle" alt="User Image"/>
-                          </div>
-                          <!-- Message title and timestamp -->
-                          <h4>                            
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <!-- The message -->
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->                      
-                    </ul><!-- /.menu -->
-                  </li>
-                  <li class="footer"><a href="#">See All Messages</a></li>
-                </ul>
-              </li><!-- /.messages-menu -->
-			*}
               <!-- Notifications Menu -->
               <li class="dropdown notifications-menu">
                 <!-- Menu toggle button -->
@@ -193,18 +158,7 @@
                       <small>{awmultilang ident="MEMBERSINCE"}  {$aActUser.awadded}</small>
                     </p>
                   </li>
-                  <!-- Menu Body -->
-                  {*<li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </li>*}
+
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">

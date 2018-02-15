@@ -40,9 +40,8 @@
 			{else}
 				{$history.awpreval}
 			{/if}
-				
-			
 		</div>
+
 		<div class="col-sm-5">
 			{if $history.awfield == 'awworkflowpos'}
 				{foreach from=$aWorkflowSteps item=workflowitem }

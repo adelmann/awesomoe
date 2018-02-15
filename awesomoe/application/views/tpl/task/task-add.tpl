@@ -5,7 +5,6 @@
 	<section class="content-header">
 		<h1>
 			{awmultilang ident="TASK"} {$aProject.awprefix} - {awmultilang ident="NEW"}
-			<small>Optional description</small>
 		</h1>
 		{include file="tpl/breadcrumb.tpl"}
 	</section>

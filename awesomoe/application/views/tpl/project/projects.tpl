@@ -5,7 +5,6 @@
 	<section class="content-header">
 		<h1>
 			{awmultilang ident="PROJECTS"}
-			<small>Optional description</small>
 		</h1>
 		{include file="tpl/breadcrumb.tpl"}
 	</section>
