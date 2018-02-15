@@ -27,10 +27,11 @@
 			   require_once(LANGUAGE);
 			   $this->_alang = $aLang;
 			} else {
-				echo '1:'.strlen($config['def_lang']).'<br>';
-				echo '1a:'.$default_lang.'<br>';
-				echo '2:'.file_exists($default_lang).'<br>';
-			   die('No lang file.');
+			    echo "awesomoe<hr>def_lang not defined and/or file does not exist<br>";
+				echo 'Just check the config.php in your awesomoe root or<br>';
+				echo 'contact awesomoe for support<br>';
+				echo '<a href="http://awesomoe.de">http://awesomoe.de</a><br>';
+			    die('');
 			}
 		}
 		
