@@ -143,7 +143,7 @@ class install
                 $txt .= "define('DEFAULTLANG', '".$_COOKIE['awesomoeSetup']."');";
             }
             $txt .= "
-                ?>\";
+                ?>
             ";
 
             fwrite($myconfig, $txt);
