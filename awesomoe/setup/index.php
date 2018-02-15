@@ -162,8 +162,13 @@ class install
 			$this->translateContent('TOLOGIN');
 			echo "</a>";
 		}  elseif($this->position == 999) {
-			$base_url="http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
-			$this->deleteDirectory($base_url);
+
+            $sUri = dirname($_SERVER["REQUEST_URI"].'?');
+
+            $path = $_SERVER["DOCUMENT_ROOT"].$sUri.'/';
+			$base_url = str_replace('//','/',$path);
+
+			$this->deleteDir($base_url);
 			$redirectURL = str_replace('setup/','',$base_url);
 			header('Location: '.$redirectURL);
 		}
@@ -171,22 +176,23 @@ class install
 		include "footer.tpl";
 	}
 
-	public function deleteDirectory($dirPath) {
-		if (is_dir($dirPath)) {
-			$objects = scandir($dirPath);
-			foreach ($objects as $object) {
-				if ($object != "." && $object !="..") {
-					if (filetype($dirPath . DIRECTORY_SEPARATOR . $object) == "dir") {
-						deleteDirectory($dirPath . DIRECTORY_SEPARATOR . $object);
-					} else {
-						unlink($dirPath . DIRECTORY_SEPARATOR . $object);
-					}
-				}
-			}
-			reset($objects);
-			rmdir($dirPath);
-		}
-	}
+    public static function deleteDir($dirPath) {
+        if (!is_dir($dirPath)) {
+            throw new InvalidArgumentException("$dirPath must be a directory");
+        }
+        if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+            $dirPath .= '/';
+        }
+        $files = glob($dirPath . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                self::deleteDir($file);
+            } else {
+                unlink($file);
+            }
+        }
+        rmdir($dirPath);
+    }
 
 
 	public function checkDB() {
@@ -229,10 +235,6 @@ class install
 			echo $ident;
 		}
 		echo $this->_alang[$ident];
-	}
-
-	public function isLangActive($sLang) {
-
 	}
 }
 ?>
