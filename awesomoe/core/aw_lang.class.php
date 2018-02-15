@@ -4,11 +4,21 @@
 		protected $_alang;
 	
 		public function __construct() {
-			/* Default language for users */
-			$config['def_lang'] = 'de';
+
+            /* Default language for users */
+		    if (defined('DEFAULTLANG')){
+                $config['def_lang'] = DEFAULTLANG;
+            } else {
+                $config['def_lang'] = 'de';
+            }
+
 			/* Auto detect language for user */
-			$config['auto_lang'] = 'yes';
-			
+            if (defined('AUTOSELECTLANG')){
+                $config['auto_lang'] = AUTOSELECTLANG;
+            } else {
+                $config['auto_lang'] = 'yes';
+            }
+
 			$default_lang = PATH . 'application/views/lang/'. $config['def_lang'] . "/lang.php";
 			/* Check if  language letters greater then 0 and language file exist */
 			if(strlen($config['def_lang'])>0 and file_exists($default_lang)) {

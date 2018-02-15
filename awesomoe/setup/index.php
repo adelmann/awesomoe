@@ -127,24 +127,26 @@ class install
 			$path = str_replace('//','/',$path);
 			$path = str_replace('setup','',$path);
 			$txt = "<?php
-
-                    define('PATH', '$path');
-                    define('URL', '$base_url');
+			define('PATH', '$path');
+			define('URL', '$base_url');
                 
-                    /** @name database information */
-                    define('DBHOST', '$this->server');
-                    define('DBNAME', '$this->database');
-                    define('DBUSER', '$this->username');
-                    define('DBPWD', '$this->password');
+			/** @name database information */
+				define('DBHOST', '$this->server');
+				define('DBNAME', '$this->database');
+				define('DBUSER', '$this->username');
+				define('DBPWD', '$this->password');
                 
-                    date_default_timezone_set('Europe/Berlin');
+                
+				date_default_timezone_set('Europe/Berlin');
             ";
             if (isset($_COOKIE["awesomoeSetup"])) {
-                $txt .= "define('DEFAULTLANG', '".$_COOKIE['awesomoeSetup']."');";
+
+			$txt .= "
+			define('DEFAULTLANG', '".$_COOKIE['awesomoeSetup']."');";
             }
             $txt .= "
-                ?>
-            ";
+			define('AUTOSELECTLANG', true);
+?>";
 
             fwrite($myconfig, $txt);
 			fclose($myconfig);
