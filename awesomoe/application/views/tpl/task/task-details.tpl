@@ -75,8 +75,8 @@
 						<div class="row">
 							<div class="col-sm-8">
 								<h4>{$aTask.awtitle}</h4>
-								{awmultilang ident="DESCRIPTION"}
-								{$aTask.awdescription}
+								<p>{awmultilang ident="DESCRIPTION"}:</p>
+								{$aTask.awdescription|unescape:'html'}
 							</div>
 							<div class="col-sm-4">
 								{if $aTask.awprio}{awmultilang ident="PRIORITY"}: {$aTask.awname}<br>{/if}
