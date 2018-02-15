@@ -29,7 +29,7 @@
 						{/if}
 						<div class="box {$priocolor} box-solid {if $task.awcolor != 3 || $task.awcolor != 2}collapsed-box{/if}">
 							<div class="box-header with-border">
-								{$task.prefix} -
+								<a href="{$task.prefix}">{$task.prefix}</a> -
 								<h3 class="box-title"><a href="index.php?cl=tasklist&fnc=taskdetails&project={$task.awproject}&task={$task.awid}">{$task.awtitle}</a></h3>
 								
 								{if $aActUser.awgroup == '1'}
@@ -38,7 +38,7 @@
 										<div class="btn-group">
 										  <button data-toggle="dropdown" class="btn btn-box-tool dropdown-toggle" aria-expanded="true"><i class="fa fa-wrench"></i></button>
 										  <ul role="menu" class="dropdown-menu">
-											<li><a href="index.php?cl=tasklist&fnc=edit&task={$aTask.awid}&project={$aProject.awid}">{awmultilang ident="EDIT"}</a></li>
+											<li><a href="index.php?cl=tasklist&fnc=edit&task={$task.awid}&project={$task.pid}">{awmultilang ident="EDIT"}</a></li>
 											<li><a href="index.php?cl=tasklist&fnc=delete&project={$task.awid}" onClick="confirm('{awmultilang ident="DELETETHISPROJECT"}')">{awmultilang ident="DELETE"}</a></li>
 										  </ul>
 										</div>

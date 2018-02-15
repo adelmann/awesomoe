@@ -94,7 +94,7 @@ class aw_tasks extends aw_base
 	
 	public function getOnlyMyTasks() {
 		$sSelect = "
-			SELECT tasks.*,prio.awname, prio.awcolor, project.awname as projectname, project.awprefix as prefix
+			SELECT tasks.*,prio.awname, prio.awcolor, project.awname as projectname, project.awprefix as prefix, project.awid as pid
 				FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 					ON prio.awid = tasks.awprio
