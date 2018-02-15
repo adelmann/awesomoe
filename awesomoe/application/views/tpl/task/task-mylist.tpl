@@ -29,7 +29,7 @@
 						{/if}
 						<div class="box {$priocolor} box-solid {if $task.awcolor != 3 || $task.awcolor != 2}collapsed-box{/if}">
 							<div class="box-header with-border">
-							
+								{$task.prefix} -
 								<h3 class="box-title"><a href="index.php?cl=tasklist&fnc=taskdetails&project={$task.awproject}&task={$task.awid}">{$task.awtitle}</a></h3>
 								
 								{if $aActUser.awgroup == '1'}
