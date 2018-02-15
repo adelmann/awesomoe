@@ -76,7 +76,7 @@
 			{/if}
 
 		{if $aTasks|@count > 0}
-			
+
 			{if $bTasklistView == 'list' }
 					{foreach from=$oWorkflows2Project item=workflow}
 						<div class="box">

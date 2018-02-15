@@ -3,12 +3,24 @@
 class aw_projects extends aw_base
 {
 	protected $oActUser = 0;
+    private $iProjectID;
 	public function __construct() {
 		parent::__construct();
 		if(!empty($_SESSION['awid'])) {
 			$userid = $_SESSION['awid'];
 			$aRights = $this->getRights4Projects();
 		}
+
+		$sActPID = $this->getParameter('project');
+		if (is_numeric($sActPID)) {
+            $this->iProjectID = $sActPID;
+        } else {
+            $sGetProjectIDSQL = "
+                SELECT awid FROM awprojects WHERE awprefix = '".$sActPID."' LIMIT 1;
+            ";
+            $oResult = $this->_db->getOne($sGetProjectIDSQL,'assoc');
+            $this->iProjectID = $oResult['awid'];
+        }
 	}
 	
 	protected function getRights4Projects() {
@@ -17,7 +29,7 @@ class aw_projects extends aw_base
 	}
 	
 	public function getProject() {
-		$sSelect = "SELECT * FROM awprojects WHERE awid = '".$this->getParameter('project')."';";
+		$sSelect = "SELECT * FROM awprojects WHERE awid = '".$this->iProjectID."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult;
 	}
@@ -51,7 +63,7 @@ class aw_projects extends aw_base
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE awproject = '".$this->getParameter('project')."';";
+			WHERE awproject = '".$this->iProjectID."';";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
@@ -61,7 +73,7 @@ class aw_projects extends aw_base
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE tasks.awproject = '".$this->getParameter('project')."' AND tasks.awid='".$this->getParameter('task')."';";
+			WHERE tasks.awproject = '".$this->iProjectID."' AND tasks.awid='".$this->getParameter('task')."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult;
 	}
@@ -75,7 +87,7 @@ class aw_projects extends aw_base
 	
 	
 	protected function delete() {
-		$iProjectId = $this->getParameter('project');
+		$iProjectId = $this->iProjectID;
 		$sDELETE = "
 				DELETE FROM awprojects WHERE awprojects.awid = '".$iProjectId."';
 			";

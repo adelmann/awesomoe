@@ -3,12 +3,23 @@
 class aw_tasks extends aw_base
 {
 	protected $oActUser = 0;
+    private $iProjectID;
 	public function __construct() {
 		parent::__construct();
 		if(!empty($_SESSION['awid'])) {
 			$userid = $_SESSION['awid'];
-			//$aRights = $this->getRights4Projects();
 		}
+        $sActPID = $this->getParameter('project');
+        if (is_numeric($sActPID)) {
+            $this->iProjectID = $sActPID;
+        } else {
+            $sGetProjectIDSQL = "
+                SELECT awid FROM awprojects WHERE awprefix = '".$sActPID."' LIMIT 1;
+            ";
+            $oResult = $this->_db->getOne($sGetProjectIDSQL,'assoc');
+            $this->iProjectID = $oResult['awid'];
+        }
+
 	}
 	
 	public function getTasts4Project() {
@@ -23,7 +34,7 @@ class aw_tasks extends aw_base
 						ON u2p.awuserid = '".$_SESSION['awid']."'
 						AND u2p.awprojectid = awprojects.awid
 					INNER JOIN awtasks as tasks
-						ON tasks.awproject = '".$this->getParameter('project')."'
+						ON tasks.awproject = '".$this->iProjectID."'
 			";
 		}
 		$oResult = $this->_db->query($sSelect,'assoc');
@@ -64,7 +75,7 @@ class aw_tasks extends aw_base
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE awproject = '".$this->getParameter('project')."' ORDER BY tasks.awprio DESC;";
+			WHERE awproject = '".$this->iProjectID."' ORDER BY tasks.awprio DESC;";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
@@ -74,7 +85,7 @@ class aw_tasks extends aw_base
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE awproject = '".$this->getParameter('project')."' AND awworkflowpos = 99 ORDER BY tasks.awprio DESC;";
+			WHERE awproject = '".$this->iProjectID."' AND awworkflowpos = 99 ORDER BY tasks.awprio DESC;";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
@@ -99,15 +110,15 @@ class aw_tasks extends aw_base
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE tasks.awproject = '".$this->getParameter('project')."' AND tasks.awid='".$this->getParameter('task')."';";
+			WHERE tasks.awproject = '".$this->iProjectID."' AND tasks.awid='".$this->getParameter('task')."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		$oResult['awdescription'] = stripslashes($oResult['awdescription']);
 		return $oResult;
 	}
 	
 	public function getWorkflowList() {
-        if (!empty($this->getParameter('project'))) {
-            $projectid = $this->getParameter('project');
+        if (!empty($this->iProjectID)) {
+            $projectid = $this->iProjectID;
         } else {
             $projectid = $this->getParameter('awprojectid');
         }
@@ -126,8 +137,8 @@ class aw_tasks extends aw_base
 	}
 
 	public function maxSteps() {
-		if (!empty($this->getParameter('project'))) {
-			$projectid = $this->getParameter('project');
+		if (!empty($this->iProjectID)) {
+			$projectid = $this->iProjectID;
 		} else {
 			$projectid = $this->getParameter('awprojectid');
 		}
@@ -144,7 +155,7 @@ class aw_tasks extends aw_base
 	}
 
 	public function set2archive(){
-		$sUpdateTask = "UPDATE awtasks SET awworkflowpos = '99' WHERE awproject='".$this->getParameter('project')."' AND awid='".$this->getParameter('task')."'";
+		$sUpdateTask = "UPDATE awtasks SET awworkflowpos = '99' WHERE awproject='".$this->iProjectID."' AND awid='".$this->getParameter('task')."'";
 		$this->_db->startTransaction();
 			try{
 				$this->_db->query($sUpdateTask);
@@ -270,13 +281,13 @@ class aw_tasks extends aw_base
 	}
 	
 	protected function getLastId(){
-		$sSelect = "SELECT max(awnumber) as count FROM awtasks WHERE awproject='".$this->getParameter('project')."';";
+		$sSelect = "SELECT max(awnumber) as count FROM awtasks WHERE awproject='".$this->iProjectID."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['count'];
 	}
 	
 	protected function delete() {
-		$iProjectId = $this->getParameter('project');
+		$iProjectId = $this->iProjectID;
 		$iTaskId = $this->getParameter('task');
 		$sDELETE = "
 				DELETE FROM awtasks WHERE awproject = '".$iProjectId."' AND awid = '".$iTaskId."';
@@ -347,7 +358,7 @@ class aw_tasks extends aw_base
 	}
 	
 	public function workedtime() {
-		$sSelect = "SELECT awtime FROM awworklog WHERE awtaskid='".$this->getParameter('task')."' AND awprojectid='".$this->getParameter('project')."';";
+		$sSelect = "SELECT awtime FROM awworklog WHERE awtaskid='".$this->getParameter('task')."' AND awprojectid='".$this->iProjectID."';";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		$hours = 0;
 		$minutes = 0;
@@ -367,7 +378,7 @@ class aw_tasks extends aw_base
 	}
 
 	public function getAllActivitys() {
-		$iProjectId = $this->getParameter('project');
+		$iProjectId = $this->iProjectID;
 		$iTaskId = $this->getParameter('task');
 
 		// Worklog

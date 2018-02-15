@@ -6,7 +6,7 @@
 	<input type="hidden" id="taskid" name="task" value="{$aTask.awid}">
 	<section class="content-header">
 		<h1>
-			{awmultilang ident="PROJECT"} - <a href="index.php?cl=tasklist&project={$aProject.awid}">{$aProject.awname}</a>
+			{awmultilang ident="PROJECT"} - <a href="{$aProject.awprefix}">{$aProject.awname}</a>
 		</h1>
 		{include file="tpl/breadcrumb.tpl"}
 	</section>

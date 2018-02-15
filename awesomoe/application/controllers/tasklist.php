@@ -6,10 +6,24 @@
 class tasklist extends aw_tasks
 {
 
+    private $iProjectID;
+
     public function __construct()
     {
         parent::__construct();
         global $smarty, $oUsers, $oWorkflows, $oProjects, $oWorklog, $oMedia;
+
+        $sActPID = $this->getParameter('project');
+        if (is_numeric($sActPID)) {
+            $this->iProjectID = $sActPID;
+        } else {
+            $sGetProjectIDSQL = "
+                SELECT awid FROM awprojects WHERE awprefix = '".$sActPID."' LIMIT 1;
+            ";
+            $oResult = $this->_db->getOne($sGetProjectIDSQL,'assoc');
+            $this->iProjectID = $oResult['awid'];
+        }
+
 
         if (!empty($this->getParameter('fnc')) && $this->getParameter('fnc') !== 'allmeasowner') {
             $smarty->assign("aWorkflowSteps", $this->getWorkflowList());
@@ -20,7 +34,7 @@ class tasklist extends aw_tasks
                 $smarty->assign('aTasks', $this->getTasks());
                 $smarty->assign('aPrio', $this->getPrioList());
                 $smarty->assign('oWorkflows2Project',
-                    $oWorkflows->getWorkflow($this->getParameter('project')));
+                    $oWorkflows->getWorkflow($this->iProjectID));
                 if (empty($this->getParameter('view'))) {
                     $smarty->assign('bTasklistView', 'agile');
                 } elseif ($this->getParameter('view') === 'agile') {
@@ -51,13 +65,13 @@ class tasklist extends aw_tasks
                 $smarty->display('tpl/task/task-add.tpl');
             } elseif ($this->getParameter('fnc') === 'delete' && $this->getParameter('cl') === 'tasklist') {
                 $bResultStage = $this->delete();
-                header('Location: index.php?cl=tasklist&project=' . $this->getParameter('project'));
+                header('Location: index.php?cl=tasklist&project=' . $this->iProjectID);
             } elseif ($this->getParameter('fnc') === 'deletemedia' && $this->getParameter('cl') == 'tasklist') {
                 $bResultStage = $oMedia->deleteMedia();
-                header('Location: index.php?cl=tasklist&fnc=taskdetails&project=' . $this->getParameter('project') . '&task=' . $this->getParameter('task'));
-            } elseif ($this->getParameter('fnc') === 'tasklist' && $this->getParameter('cl') === 'tasklist' && !empty($this->getParameter('project'))) {
+                header('Location: index.php?cl=tasklist&fnc=taskdetails&project=' . $this->iProjectID . '&task=' . $this->getParameter('task'));
+            } elseif ($this->getParameter('fnc') === 'tasklist' && $this->getParameter('cl') === 'tasklist' && !empty($this->iProjectID)) {
                 $smarty->assign('oUsers', $oUsers);
-            } elseif ($this->getParameter('fnc') === 'taskdetails' && $this->getParameter('cl') === 'tasklist' && !empty($this->getParameter('project'))) {
+            } elseif ($this->getParameter('fnc') === 'taskdetails' && $this->getParameter('cl') === 'tasklist' && !empty($this->iProjectID)) {
                 $smarty->assign('aProject', $oProjects->getProject());
                 $smarty->assign('aTask', $this->getTask());
                 $smarty->assign('oWorklogs', $oWorklog->getWorklog4Task());
@@ -79,7 +93,7 @@ class tasklist extends aw_tasks
             } elseif ($this->getParameter('fnc') === 'overtime' && $this->getParameter('cl') === 'tasklist') {
                 $smarty->assign('aTasks', $this->getOverTimedTasks());
                 $smarty->display('tpl/task/task-overtime.tpl');
-            } elseif ($this->getParameter('fnc') === 'set2archive' && $this->getParameter('cl') === 'tasklist' && !empty($this->getParameter('project')) && !empty($this->getParameter('task'))) {
+            } elseif ($this->getParameter('fnc') === 'set2archive' && $this->getParameter('cl') === 'tasklist' && !empty($this->iProjectID) && !empty($this->getParameter('task'))) {
                 $this->set2archive();
             }
             //changestate
@@ -98,7 +112,7 @@ class tasklist extends aw_tasks
                 } else {
                     $taskId = $this->getParameter('awid');
                 }
-                header('Location: index.php?cl=tasklist&fnc=taskdetails&project=' . $this->getParameter('project') . '&task=' . $taskId);
+                header('Location: index.php?cl=tasklist&fnc=taskdetails&project=' . $this->iProjectID . '&task=' . $taskId);
             } elseif ($this->getParameter('fnc') === 'uploadFiles' && $this->getParameter('cl') === 'tasklist') {
                 $oMedia->loadMedia2Task();
             }

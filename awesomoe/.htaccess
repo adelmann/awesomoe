@@ -1,0 +1,16 @@
+
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    RewriteRule ^(.*)$ index.php?cl=tasklist&project=$1 [L,QSA]    RewriteBase /
+
+</IfModule>
+
+<FilesMatch "(\.log|\.tpl|pkg\.rev|\.ini|pkg\.info|\.pem|composer\.json|composer\.lock|test_config\.yml)$">
+    order allow,deny
+    deny from all
+</FilesMatch>
+
