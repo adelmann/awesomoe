@@ -204,9 +204,6 @@ INSERT INTO `awprio` (`awid`, `awname`, `awsort`, `awcolor`) VALUES
 (3, 'Hoch', 3, 2),
 (4, 'Blocker', 4, 3) ;
 
-INSERT INTO `awusers` (`awid`, `awmail`, `awpassword`, `awname`, `awlastname`, `awcompany`, `awphone`, `awmobile`, `awzip`, `awcity`, `awstreet`, `awcountry`, `awgender`, `awavatar`, `awlastlogin`, `awurl`, `awposition`, `awadded`, `awstate`, `awgroup`, `awupdate`) VALUES
-(1, 'new@awesomoe.de', '21232f297a57a5a743894a0e4a801fc3', 'John', 'Doe', 1, '', '', 79098, 'Freiburg', '', 1, 1, '', NOW(), '', '', NOW(), 0, 1, NOW()) ;
-
 INSERT INTO `awworkflow` (`awid`, `awname`) VALUES
 (1, 'Standard') ;
 

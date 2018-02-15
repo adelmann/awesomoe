@@ -23,7 +23,7 @@
   <body class="login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="index.php">{$sTitle}</a>
+        <a href="index.php">{if $sTitle}{$sTitle}{else}<img src="media/system/logo-transparent-bright.png" />{/if}</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">{awmultilang ident="SIGNIN"}</p>

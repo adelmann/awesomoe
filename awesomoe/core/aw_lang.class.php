@@ -4,11 +4,21 @@
 		protected $_alang;
 	
 		public function __construct() {
-			/* Default language for users */
-			$config['def_lang'] = 'de';
+
+            /* Default language for users */
+		    if (defined('DEFAULTLANG')){
+                $config['def_lang'] = DEFAULTLANG;
+            } else {
+                $config['def_lang'] = 'de';
+            }
+
 			/* Auto detect language for user */
-			$config['auto_lang'] = 'yes';
-			
+            if (defined('AUTOSELECTLANG')){
+                $config['auto_lang'] = AUTOSELECTLANG;
+            } else {
+                $config['auto_lang'] = 'yes';
+            }
+
 			$default_lang = PATH . 'application/views/lang/'. $config['def_lang'] . "/lang.php";
 			/* Check if  language letters greater then 0 and language file exist */
 			if(strlen($config['def_lang'])>0 and file_exists($default_lang)) {
@@ -27,10 +37,11 @@
 			   require_once(LANGUAGE);
 			   $this->_alang = $aLang;
 			} else {
-				echo '1:'.strlen($config['def_lang']).'<br>';
-				echo '1a:'.$default_lang.'<br>';
-				echo '2:'.file_exists($default_lang).'<br>';
-			   die('No lang file.');
+			    echo "awesomoe<hr>def_lang not defined and/or file does not exist<br>";
+				echo 'Just check the config.php in your awesomoe root or<br>';
+				echo 'contact awesomoe for support<br>';
+				echo '<a href="http://awesomoe.de">http://awesomoe.de</a><br>';
+			    die('');
 			}
 		}
 		
