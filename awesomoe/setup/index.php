@@ -169,6 +169,8 @@ class install
 			$base_url = str_replace('//','/',$path);
 
 			$this->deleteDir($base_url);
+
+			$base_url="http://".$_SERVER['SERVER_NAME'].dirname($_SERVER["REQUEST_URI"].'?').'/';
 			$redirectURL = str_replace('setup/','',$base_url);
 			header('Location: '.$redirectURL);
 		}
