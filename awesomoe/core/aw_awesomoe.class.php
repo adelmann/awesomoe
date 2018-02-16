@@ -16,10 +16,12 @@ class aw_awesomoe extends aw_supercfg
         $iDays4NewTasks = $this->_oConfig->getConfigParam('iDays4NewTasks');
         $iDays4EndTime = $this->_oConfig->getConfigParam('iDays4EndTime');
         $iAgileType = $this->_oConfig->getConfigParam('iAgileType');
+        $sVersion = $this->_oConfig->getConfigParam('sVersion');
 		$smarty->assign("sTitle", $sTitle);
 		$smarty->assign("sCopyright", $sCopyright);
 		$smarty->assign("sCopyrightLink", $sCopyrightLink);
 		$smarty->assign("sFooterInfo", $sFooterInfo);
+		$smarty->assign("sVersion", $sVersion);
 		$smarty->assign("sMailName", $sMailName);
 		$smarty->assign("sMailAdress", $sMailAdress);
 		$smarty->assign("sSkin", $sSkin);

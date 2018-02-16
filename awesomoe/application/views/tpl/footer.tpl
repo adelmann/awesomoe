@@ -3,7 +3,7 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            {$sFooterInfo} - V. 0.8
+            {$sFooterInfo} - V. {$sVersion}
         </div>
         <!-- Default to the left --> 
         <strong>Copyright &copy; 2015 <a href="{$sCopyrightLink}">{$sCopyright}</a>.</strong>
