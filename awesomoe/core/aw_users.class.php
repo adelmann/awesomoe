@@ -3,6 +3,18 @@
 class aw_users extends aw_base
 {
 	protected $oActUser = 0;
+
+    public $aCountry = array(
+        '0' => 'NOTSETTED',
+        '1' => 'GERMANY',
+        '2' => 'AUSTRIA',
+        '3' => 'SWISS',
+        '4' => 'FRANCE',
+        '5' => 'SPAIN',
+        '6' => 'UNITEDKINGDOM',
+        '7' => 'NETHERLAND',
+    );
+
 	public function __construct() {
 		parent::__construct();
 		global $smarty;
@@ -259,6 +271,14 @@ class aw_users extends aw_base
             'solved'    => $iSolvedtasks
         );
         return $aReturn;
+    }
+
+    public function getCountryById($iId){
+        return $this->aCountry[$iId];
+    }
+
+    public function getAllCountrys() {
+        return $this->aCountry;
     }
 	
 
