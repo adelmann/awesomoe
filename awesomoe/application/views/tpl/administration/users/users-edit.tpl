@@ -81,6 +81,23 @@
                                     <input type="text" placeholder="{awmultilang ident="http://www."}" class="form-control" name="awurl" value="{$aEditUser.awurl}">
                                 </div>
                             </div>
+
+
+                            <div class="form-group">
+                                <label for="mobile">{awmultilang ident="COMPANY"}</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-group"></i>
+                                    </div>
+
+                                    <select name="awcompany" class="form-control">
+                                        {foreach from=$aCompanys item=companyitem}
+                                            <option value="{$companyitem.awid}"{if ($aEditUser.awcompany == $companyitem.awid)} selected="selected"{/if}>{$companyitem.awname}</option>
+                                        {/foreach}
+                                        <option value=""{if ($aEditUser.awcompany == '0')} selected="selected"{/if}>-</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="mobile">{awmultilang ident="POSITION"}</label>
                                 <div class="input-group">

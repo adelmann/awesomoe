@@ -9,7 +9,7 @@ class users extends aw_users
     public function __construct()
     {
         parent::__construct();
-        global $smarty, $oUsers;
+        global $smarty, $oUsers, $oCompanys;
 
         if (empty($_POST)) {
             if ($this->getParameter('cl') === "users" && empty($this->getParameter('fnc'))) {
@@ -17,6 +17,7 @@ class users extends aw_users
                 $smarty->display('tpl/administration/users/users-overview.tpl');
             } elseif ($this->getParameter('cl') === 'users' && $this->getParameter('fnc') === 'edit') {
                 $userid = $this->getParameter('user');
+                $smarty->assign('aCompanys', $oCompanys->getAllCompanys());
                 $smarty->assign('aEditUser', $this->oChoosenUser($userid));
                 $smarty->display('tpl/administration/users/users-edit.tpl');
             } elseif ($this->getParameter('cl') === 'users' && $this->getParameter('fnc') == 'add') {

@@ -55,7 +55,7 @@
 								</tr>
 								<tr>
 								  <td class="text-right">{awmultilang ident="COMPANY"}</td>
-								  <td>{$aActUser.awcompany}</td>
+								  <td>{$aActUser.awcompanyname}</td>
 								</tr>
 								<tr>
 								  <td class="text-right">{awmultilang ident="POSITION"}</td>

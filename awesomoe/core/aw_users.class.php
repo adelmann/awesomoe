@@ -12,9 +12,14 @@ class aw_users extends aw_base
 			$smarty->assign("aActUser", $this->oActUser);
 		}
 	}
-	
+
 	public function getUserDatas($iId) {
-		$sSelect = "SELECT * FROM awusers WHERE awid = '".$iId."';";
+		$sSelect = "
+          SELECT awusers.*, awcompanys.awname as awcompanyname
+            FROM awusers
+             LEFT JOIN awcompanys
+              ON awcompanys.awid = awusers.awcompany
+            WHERE awusers.awid = '".$iId."';";
 		//echo md5($password);
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult;
@@ -28,7 +33,7 @@ class aw_users extends aw_base
     }
 
 
-	
+
 	public function getUserName($iId) {
 		$sSelect = "SELECT awname,awlastname FROM awusers WHERE awid = '".$iId."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
@@ -58,8 +63,8 @@ class aw_users extends aw_base
 		};
 		return true;
 	}
-	
-	
+
+
 	public function getAllUsersRel2Project() {
         if ($this->getParameter('project') != null) {
             $sSelect = "
@@ -88,8 +93,8 @@ class aw_users extends aw_base
 		return $oResult;
 
     }
-	
-	
+
+
 	public function getGroupRights() {
 		$sSelectGroup = "
 			SELECT awgroups.* FROM awgroups
@@ -100,7 +105,7 @@ class aw_users extends aw_base
 		$oResult = $this->_db->query($sSelectGroup,'assoc');
 		return $oResult;
 	}
-	
+
 	public function getUsersFromProject() {
 		$sSelect = "
 			SELECT awusers.awname,awusers.awlastname,awusers.awid FROM awusers
@@ -111,7 +116,7 @@ class aw_users extends aw_base
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
 	protected function save() {
 		$aSaveParams = $this->getAllParameter($_POST);
         $actDateTime = date('Y-m-d H:i:s');
@@ -227,7 +232,7 @@ class aw_users extends aw_base
                     }
                 }
                 if ($entry['awdeadline'] != '0000-00-00' && $entry['awowner'] == $_SESSION['awid']) {
-                	
+
 				   if (strtotime($entry['awdeadline']) < time()) {
                         $iCountOverTime++;
                     }
