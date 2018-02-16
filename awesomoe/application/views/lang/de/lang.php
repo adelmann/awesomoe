@@ -196,6 +196,9 @@ $aLang = array(
 'NEWWORKFLOW'                           => 'Neuer Workflow',
 'WORKFLOWS'                             => 'Workflows',
 'NOWORKFLOWAVAILABLE'                   => 'Kein Workflow verfügbar',
+'AGILETABLEDIVVIEW'                     => 'Tasks im Agile Modus als Div oder in Tabelle darstellen?',
+'AGILETABLE'                            => 'Tabelle',
+'AGILEDIV'                              => 'Div',
 
 // ACCOUNT
 'OVERVIEW'                              => 'Übersicht',

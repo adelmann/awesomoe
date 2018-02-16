@@ -32,6 +32,9 @@ class tasklist extends aw_tasks
             if (empty($this->getParameter('fnc')) && $this->getParameter('cl') === 'tasklist') {
                 $smarty->assign('aProject', $oProjects->getProject());
                 $smarty->assign('aTasks', $this->getTasks());
+
+                $iAgileType = $this->_oConfig->getConfigParam('iAgileType');
+                $smarty->assign('iAgileType', $iAgileType);
                 $smarty->assign('aPrio', $this->getPrioList());
                 $smarty->assign('oWorkflows2Project',
                     $oWorkflows->getWorkflow($this->iProjectID));

@@ -21,9 +21,9 @@ class config extends aw_config
             if ($oBase->getParameter('fnc') == 'save' && $oBase->getParameter('cl') == 'config') {
                 $bResultStage = $this->save();
                 if ($oBase->getParameter('fnc') == "mail") {
-                    header('Location: index.php?cl=config');
-                } else {
                     header('Location: index.php?cl=config&fnc=mail');
+                } else {
+                    header('Location: index.php?cl=config');
                 }
             }
         }

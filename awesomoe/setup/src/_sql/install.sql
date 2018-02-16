@@ -191,7 +191,8 @@ INSERT INTO `awconfig` (`awid`, `awvarname`, `awvartype`, `awvarvalue`) VALUES
 (7, 'iDays4EndTime', 'int', '2'),
 (8, 'sMailName', 'str', 'awesomoe.de'),
 (9, 'sMailAdress', 'str', ''),
-(10, 'sVersion', 'str', '0.7') ;
+(10, 'sVersion', 'str', '1.0') ;
+(11, 'iAgileType', 'int', '2') ;
 
 INSERT INTO `awgroups` (`awid`, `awname`, `awproject`, `awtask`, `awtrack`, `awfiles`, `awadmin`) VALUES
 (1, 'Admin', '1,1,1,1', '1,1,1,1', '1,1,1,1', '1,1,1,1', 1),
