@@ -14,13 +14,13 @@ class users extends aw_users
         if (empty($_POST)) {
             if ($this->getParameter('cl') === "users" && empty($this->getParameter('fnc'))) {
                 $smarty->assign('oUsers', $this->getAllUsers());
-                $smarty->display('tpl/administration/users-overview.tpl');
+                $smarty->display('tpl/administration/users/users-overview.tpl');
             } elseif ($this->getParameter('cl') === 'users' && $this->getParameter('fnc') === 'edit') {
                 $userid = $this->getParameter('user');
                 $smarty->assign('aEditUser', $this->oChoosenUser($userid));
-                $smarty->display('tpl/administration/users-edit.tpl');
+                $smarty->display('tpl/administration/users/users-edit.tpl');
             } elseif ($this->getParameter('cl') === 'users' && $this->getParameter('fnc') == 'add') {
-                $smarty->display('tpl/administration/users-add.tpl');
+                $smarty->display('tpl/administration/users/users-add.tpl');
             } elseif (!empty($this->getParameter('cl')) == 'users' && $this->getParameter('fnc') == 'delete') {
                 $bResultStage = $this->delete();
                 header('Location: index.php?cl=users');

@@ -46,14 +46,14 @@
 		<li{if $actclass == 'tasklist' && $actfnc == 'allmeasowner'} class="active"{/if}><a href="index.php?cl=tasklist&fnc=allmeasowner"><i class="fa fa-bars"></i> <span>{awmultilang ident="TASKS"}</span></a></li>
 		<li><a href="index.php?cl=calendar"><i class="fa fa-calendar"></i> <span>{awmultilang ident="CALENDAR"}</span></a></li>
 		{if $aActUser.awgroup == '1'}
-			<li class="treeview{if $actclass == 'workflows' || $actclass == 'users' || $actclass == 'config' || $actclass == 'prioritys'} active{/if}">
+			<li class="treeview{if $actclass == 'workflows' || $actclass == 'users' || $actclass == 'config' || $actclass == 'prioritys' || $actclass == 'companys'} active{/if}">
 			  <a href="#"><i class="fa fa-cogs"></i><span>{awmultilang ident="ADMINISTRATION"}</span> <i class="fa fa-angle-left pull-right"></i></a>
 			  <ul class="treeview-menu">
 				<li{if $actclass == 'workflows'} class="active"{/if}><a href="index.php?cl=workflows"><i class="fa fa-circle-o"></i> {awmultilang ident="WORKFLOW"}</a></li>
 				<li{if $actclass == 'users'} class="active"{/if}><a href="index.php?cl=users"><i class="fa fa-circle-o"></i> {awmultilang ident="USER"}</a></li>
-				{*<li><a href="#"><i class="fa fa-circle-o"></i> {awmultilang ident="GROUPS"}</a></li>
-				<li><a href="#"><i class="fa fa-circle-o"></i> {awmultilang ident="COMPANYS"}</a></li>
-				<li><a href="#"><i class="fa fa-circle-o"></i> {awmultilang ident="PLUGINS"}</a></li>*}
+				{*<li><a href="#"><i class="fa fa-circle-o"></i> {awmultilang ident="GROUPS"}</a></li>*}
+				<li{if $actclass == 'companys'} class="active"{/if}><a href="index.php?cl=companys"><i class="fa fa-circle-o"></i> {awmultilang ident="COMPANYS"}</a></li>
+				{*<li><a href="#"><i class="fa fa-circle-o"></i> {awmultilang ident="PLUGINS"}</a></li>*}
 				<li{if $actclass == 'config'} class="active"{/if}>
                     <a href="#"><i class="fa fa-circle-o"></i> {awmultilang ident="CONFIGURATION"}   <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu{if $actclass == 'config'} active{/if}">

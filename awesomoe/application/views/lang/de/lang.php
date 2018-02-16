@@ -37,6 +37,7 @@ $aLang = array(
 'BASECONFIG'                             => 'Basis Konfiguration',
 'MAILCONFIG'                             => 'Mail Konfiguration',
 'TASKPRIORITYS'                          => 'Task Priorität',
+'COMPANYS'                               => 'Firmen',
 
 // LOGIN
 'SIGNIN'                                 => 'Einloggen',
@@ -242,4 +243,8 @@ $aLang = array(
 'TASK'                                  => 'Task',
 'TASKS'                                 => 'Tasks',
 'SAVE'                                  => 'Speichern',
+
+// COMPANYS
+'NEWCOMPANY'                            => 'Neue Firma',
+'COMPANYLIST'                           => 'Firmenliste',
 );
