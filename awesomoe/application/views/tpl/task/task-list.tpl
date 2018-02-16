@@ -76,9 +76,9 @@
 			{/if}
 
 		{if $aTasks|@count > 0}
-			
+
 			{if $bTasklistView == 'list' }
-					{foreach from=$oWorkflows2Project item=workflow}
+				{foreach from=$oWorkflows2Project item=workflow}
 						<div class="box">
 							<div class="box-header with-border">
 							  <h3 class="box-title">{$workflow.awname}</h3>
@@ -270,58 +270,120 @@
 					</div>
 				</div>
 			{else}
+
 				{assign var=workflowcount value=$oWorkflows2Project|@count}
 				{if $workflowcount > 0 }
-					<div class="row">
-						{math equation="floor(x / y)" x=12 y=$workflowcount assign="gridsize"}
-						{foreach from=$oWorkflows2Project item=workflow name="agileproject"}
-							<div class="col-md-{$gridsize}">
-								<div class="workflowtitle">
-										<h3>{$workflow.awname}</h3>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										{foreach from=$aTasks item=task}
-											{if ($task.awworkflowpos == $smarty.foreach.agileproject.iteration) || ($task.awworkflowpos == 0 && $smarty.foreach.agileproject.iteration == 1)}
-												{if $task.awcolor == 0}
-													{assign var=priocolor value="box-default"}
-												{elseif $task.awcolor == 1}
-													{assign var=priocolor value="box-success"}
-												{elseif $task.awcolor == 2}
-													{assign var=priocolor value="box-warning"}
-												{elseif $task.awcolor == 3}
-													{assign var=priocolor value="box-danger"}
-												{elseif $task.awcolor == 4}
-													{assign var=priocolor value="box-primary"}
-												{else}
-													{assign var=priocolor value="box-default"}
-												{/if}
-												<div class="box {$priocolor}">
-													<div class="box-header with-border">
-														<a href="index.php?cl=tasklist&fnc=taskdetails&project={$aProject.awid}&task={$task.awid}">
-															{$aProject.awprefix}-{$task.awnumber}<br>
-															{$task.awname}
-															
-														</a>
-														<span class="pull-right image small">
+					{* iAgileType = 1 -> table View *}
+					{if $iAgileType == 1}
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+								<tr>
+									{foreach from=$oWorkflows2Project item=workflow}
+										<td><h3 class="box-title">{$workflow.awname}</h3></td>
+									{/foreach}
+								</tr>
+								</thead>
+								<tr>
+									{foreach from=$oWorkflows2Project item=workflow name="agileproject"}
+										<td>
+											{foreach from=$aTasks item=task}
+												{if ($task.awworkflowpos == $smarty.foreach.agileproject.iteration) || ($task.awworkflowpos == 0 && $smarty.foreach.agileproject.iteration == 1)}
+													{if $task.awcolor == 0}
+														{assign var=priocolor value="box-default"}
+													{elseif $task.awcolor == 1}
+														{assign var=priocolor value="box-success"}
+													{elseif $task.awcolor == 2}
+														{assign var=priocolor value="box-warning"}
+													{elseif $task.awcolor == 3}
+														{assign var=priocolor value="box-danger"}
+													{elseif $task.awcolor == 4}
+														{assign var=priocolor value="box-primary"}
+													{else}
+														{assign var=priocolor value="box-default"}
+													{/if}
+													<div class="box {$priocolor}">
+														<div class="box-header with-border">
+															<a href="index.php?cl=tasklist&fnc=taskdetails&project={$aProject.awid}&task={$task.awid}">
+																{$aProject.awprefix}-{$task.awnumber}<br>
+																{$task.awname}
+
+															</a>
+															<span class="pull-right image small">
 															{if $oUser->getUserAvatar($task.awowner)}
 																<img src="media/profile/{$oUser->getUserAvatar($task.awowner)}" class="img-circle" alt="{$oUser->getUserName($task.awowner)}">
 															{elseif $task.awowner != '0'}
 																<span class="noavatar">{$oUser->getUserInitial($task.awowner)}</span>
 															{/if}
 														</span>
+														</div>
+														<div class="box-body">
+															<h4 class="box-title">{$task.awtitle}</h4>
+														</div>
 													</div>
-													<div class="box-body">
-														<h4 class="box-title">{$task.awtitle}</h4>
+												{/if}
+											{/foreach}
+										</td>
+									{/foreach}
+								</tr>
+							</table>
+						</div>
+
+					{* iAgileType = 2 -> normal bootstrap Div Row *}
+					{elseif $iAgileType == 2}
+						<div class="row">
+							{math equation="floor(x / y)" x=12 y=$workflowcount assign="gridsize"}
+							{foreach from=$oWorkflows2Project item=workflow name="agileproject"}
+								<div class="col-md-{$gridsize}">
+									<div class="workflowtitle">
+										<h3>{$workflow.awname}</h3>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											{foreach from=$aTasks item=task}
+												{if ($task.awworkflowpos == $smarty.foreach.agileproject.iteration) || ($task.awworkflowpos == 0 && $smarty.foreach.agileproject.iteration == 1)}
+													{if $task.awcolor == 0}
+														{assign var=priocolor value="box-default"}
+													{elseif $task.awcolor == 1}
+														{assign var=priocolor value="box-success"}
+													{elseif $task.awcolor == 2}
+														{assign var=priocolor value="box-warning"}
+													{elseif $task.awcolor == 3}
+														{assign var=priocolor value="box-danger"}
+													{elseif $task.awcolor == 4}
+														{assign var=priocolor value="box-primary"}
+													{else}
+														{assign var=priocolor value="box-default"}
+													{/if}
+													<div class="box {$priocolor}">
+														<div class="box-header with-border">
+															<a href="index.php?cl=tasklist&fnc=taskdetails&project={$aProject.awid}&task={$task.awid}">
+																{$aProject.awprefix}-{$task.awnumber}<br>
+																{$task.awname}
+
+															</a>
+															<span class="pull-right image small">
+															{if $oUser->getUserAvatar($task.awowner)}
+																<img src="media/profile/{$oUser->getUserAvatar($task.awowner)}" class="img-circle" alt="{$oUser->getUserName($task.awowner)}">
+															{elseif $task.awowner != '0'}
+																<span class="noavatar">{$oUser->getUserInitial($task.awowner)}</span>
+															{/if}
+														</span>
+														</div>
+														<div class="box-body">
+															<h4 class="box-title">{$task.awtitle}</h4>
+														</div>
 													</div>
-												</div>
-											{/if}
-										{/foreach}
+												{/if}
+											{/foreach}
+										</div>
 									</div>
 								</div>
-							</div>
-						{/foreach}
-					</div>
+							{/foreach}
+						</div>
+					{/if}
+
+
 					<div class="row"><hr></div>
 					
 				{/if}

@@ -50,7 +50,6 @@ class aw_notification extends aw_base
 				GROUP BY users.awid;
 		";
 		$oResult = $this->_db->query($sSelectUser,'assoc');
-		echo $sSelectUser.'<hr>';
         return $oResult;
     }
 

@@ -21,7 +21,7 @@
 					<div class="col-md-12">
 						<div class="box box-solid">
 							<div class="box-header with-border">
-								<h3 class="box-title"><a href="index.php?cl=tasklist&project={$project.awid}">{$project.awname}</a></h3>
+								<h3 class="box-title"><a href="{$project.awprefix}">{$project.awname}</a></h3>
 								{if $aActUser.awgroup == '1'}
 									<div class="box-tools pull-right">
 										<button data-widget="collapse" class="btn btn-box-tool"><i class="fa fa-minus"></i></button>
@@ -39,22 +39,24 @@
 								<div class="row">
 									<div class="col-sm-2 project">
 										{if $project.awpicture}
-											<a href="index.php?cl=tasklist&project={$project.awid}">
+											<a href="{$project.awprefix}">
 												<img class="img-circle" src="media/projects/{$project.awpicture}">
 											</a>
 										{elseif $project.awprefix}
-											<a href="index.php?cl=tasklist&project={$project.awid}">
+											<a href="{$project.awprefix}">
 												<div class="img-circle">{$project.awprefix}</div>
 											</a>
 										{else}
-											<a href="index.php?cl=tasklist&project={$project.awid}">
+											<a href="{$project.awprefix}">
 												<div class="img-circle">{$project.awname}</div>
 											</a>
 										{/if}
 									</div>
 									<div class="col-sm-6">
-										{awmultilang ident="DESCRIPTION"}<br>
-										{$project.awdescription}
+										{if $project.awdescription != ''}
+											{awmultilang ident="DESCRIPTION"}:<br>
+											{$project.awdescription}
+										{/if}
 									</div>
 									<div class="col-md-4">
 									

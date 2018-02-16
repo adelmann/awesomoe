@@ -27,6 +27,7 @@
 
 	$oAuth 			= new aw_auth();
 	$oUsers 		= new aw_users();
+	$oCompanys 		= new aw_companys();
 	$oMedia 		= new aw_media();
 	$oCalendar 		= new aw_calendar();
 	$oProjects 		= new aw_projects();

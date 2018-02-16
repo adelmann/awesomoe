@@ -15,20 +15,20 @@ class workflows extends aw_workflows
 
         if (empty($_POST)) {
             if (empty($this->getParameter('fnc')) && $this->getParameter('cl') === 'workflows') {
-                $smarty->display('tpl/administration/workflows.tpl');
+                $smarty->display('tpl/administration/workflows/workflows.tpl');
             } elseif ($this->getParameter('fnc') === 'edit' && $this->getParameter('cl') === 'workflows') {
                 $smarty->assign('oWorkflow', $this->getWorkflow());
                 $smarty->assign('oWorkflowID', $this->getParameter('workflow'));
-                $smarty->display('tpl/administration/workflow-edit.tpl');
+                $smarty->display('tpl/administration/workflows/workflow-edit.tpl');
             } elseif ($this->getParameter('fnc') === 'add' && $this->getParameter('cl') === 'workflows') {
-                $smarty->display('tpl/administration/workflow-add.tpl');
+                $smarty->display('tpl/administration/workflows/workflow-add.tpl');
             } elseif ($this->getParameter('fnc') === 'delete' && $this->getParameter('cl') === 'workflows') {
                 $bResultStage = $this->delete();
                 header('Location: index.php?cl=workflows');
             } elseif ($this->getParameter('fnc') === 'tasklist' && $this->getParameter('cl') === 'workflows' && !empty($this->getParameter('workflow'))) {
-                $smarty->display('tpl/administration/workflows.tpl');
+                $smarty->display('tpl/administration/workflows/workflows.tpl');
             } else {
-                $smarty->display('tpl/administration/workflows.tpl');
+                $smarty->display('tpl/administration/workflows/workflows.tpl');
             }
         } else {
             if ($this->getParameter('fnc') === 'save' && $this->getParameter('cl') === 'workflows') {

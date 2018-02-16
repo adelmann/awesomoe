@@ -37,6 +37,7 @@ $aLang = array(
 'BASECONFIG'                             => 'Basis Konfiguration',
 'MAILCONFIG'                             => 'Mail Konfiguration',
 'TASKPRIORITYS'                          => 'Task Priorität',
+'COMPANYS'                               => 'Firmen',
 
 // LOGIN
 'SIGNIN'                                 => 'Einloggen',
@@ -197,6 +198,9 @@ $aLang = array(
 'NEWWORKFLOW'                           => 'Neuer Workflow',
 'WORKFLOWS'                             => 'Workflows',
 'NOWORKFLOWAVAILABLE'                   => 'Kein Workflow verfügbar',
+'AGILETABLEDIVVIEW'                     => 'Tasks im Agile Modus als Div oder in Tabelle darstellen?',
+'AGILETABLE'                            => 'Tabelle',
+'AGILEDIV'                              => 'Div',
 
 // ACCOUNT
 'OVERVIEW'                              => 'Übersicht',
@@ -240,4 +244,8 @@ $aLang = array(
 'TASK'                                  => 'Task',
 'TASKS'                                 => 'Tasks',
 'SAVE'                                  => 'Speichern',
+
+// COMPANYS
+'NEWCOMPANY'                            => 'Neue Firma',
+'COMPANYLIST'                           => 'Firmenliste',
 );

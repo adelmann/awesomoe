@@ -109,7 +109,7 @@
                             <ul class="todo-list">
                               {foreach from=$myProjects item=project}
                                   <li>
-                                      <a href="index.php?cl=tasklist&project={$project.awid}">
+                                      <a href="{$project.awprefix}">
                                           {if $project.awpicture}
                                               <img class="img-circle startindex" src="media/projects/{$project.awpicture}" >
                                           {elseif $project.awprefix}
