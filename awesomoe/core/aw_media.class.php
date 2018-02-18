@@ -1,112 +1,151 @@
 <?php
 
+/**
+ * Class aw_media
+ */
 class aw_media extends aw_base
 {
+
+    /**
+     * aw_media constructor.
+     */
 	public function __construct() {
+
 		parent::__construct();
 	}
-	
+
+    /**
+     * loadAvatar
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 	public function loadAvatar() {
+
 		global $oUsers,$oProjects;
 		$filename = $_FILES['uploadavatar']['name'];
-		$filename = str_replace(" ", "_", "$filename"); 
-		$filename = htmlentities($filename); 
-		$filename = strtolower($filename);
-		$dateityp = GetImageSize($_FILES['uploadavatar']['tmp_name']); 
-		if($dateityp[2] == 2) { 
-			if($_FILES['uploadavatar']['size'] <  2048000) {
-				if($_FILES['uploadavatar']['size'] <  2048000) { 
-					move_uploaded_file($_FILES['uploadavatar']['tmp_name'], PATH."tmp/media/$filename"); 
-					$file        = PATH."tmp/media/$filename"; 
-					$target    	 = PATH."media/profile/$filename"; 
-					$max_width   = "150";
-					$max_height  = "150";
-					$quality     = "90";
-					$src_img     = imagecreatefromjpeg($file); 
-					$picsize     = getimagesize($file); 
-					$src_width   = $picsize[0]; 
-					$src_height  = $picsize[1]; 
-							   
-					if($src_width > $src_height){ 
-						if($src_width > $max_width){ 
-							$convert = $max_width/$src_width; 
-							$dest_width = $max_width; 
-							$dest_height = ceil($src_height*$convert); 
-						} else { 
-							$dest_width = $src_width; 
-							$dest_height = $src_height; 
-						} 
-					} else { 
-						if($src_height > $max_height){ 
-							$convert = $max_height/$src_height; 
-							$dest_height = $max_height; 
-							$dest_width = ceil($src_width*$convert); 
-						} else { 
-							$dest_height = $src_height; 
-							$dest_width = $src_width; 
-						} 
-					} 
-					$dst_img = imagecreatetruecolor($dest_width,$dest_height); 
-					imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $dest_width, $dest_height, $src_width, $src_height); 
-					imagejpeg($dst_img, $target, $quality); 
-					unlink(PATH."tmp/media/$filename");
-					$oUsers->saveUserAvatar($filename);
-				}
-			}
-		}
+        if (!empty($filename)){
+            $filename = str_replace(" ", "_", "$filename");
+            $filename = htmlentities($filename);
+            $filename = strtolower($filename);
+            $dateityp = GetImageSize($_FILES['uploadavatar']['tmp_name']);
+            if($dateityp[2] == 2) {
+                if($_FILES['uploadavatar']['size'] <  2048000) {
+                    if($_FILES['uploadavatar']['size'] <  2048000) {
+                        move_uploaded_file($_FILES['uploadavatar']['tmp_name'], PATH."tmp/media/$filename");
+                        $file        = PATH."tmp/media/$filename";
+                        $target    	 = PATH."media/profile/$filename";
+                        $max_width   = "150";
+                        $max_height  = "150";
+                        $quality     = "90";
+                        $src_img     = imagecreatefromjpeg($file);
+                        $picsize     = getimagesize($file);
+                        $src_width   = $picsize[0];
+                        $src_height  = $picsize[1];
+
+                        if($src_width > $src_height){
+                            if($src_width > $max_width){
+                                $convert = $max_width/$src_width;
+                                $dest_width = $max_width;
+                                $dest_height = ceil($src_height*$convert);
+                            } else {
+                                $dest_width = $src_width;
+                                $dest_height = $src_height;
+                            }
+                        } else {
+                            if($src_height > $max_height){
+                                $convert = $max_height/$src_height;
+                                $dest_height = $max_height;
+                                $dest_width = ceil($src_width*$convert);
+                            } else {
+                                $dest_height = $src_height;
+                                $dest_width = $src_width;
+                            }
+                        }
+                        $dst_img = imagecreatetruecolor($dest_width,$dest_height);
+                        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $dest_width, $dest_height, $src_width, $src_height);
+                        imagejpeg($dst_img, $target, $quality);
+                        unlink(PATH."tmp/media/$filename");
+                        $oUsers->saveUserAvatar($filename);
+                    }
+                }
+            }
+        }
 	}
-	
+
+    /**
+     * deleteAvatar
+     * -----------------------------------------------------------------------------------------------------------------
+     */
+	public function deleteAvatar() {
+        global $oUsers;
+        $oUsers->saveUserAvatar('');
+        $sFile = $this->getParameter('src');
+        unlink(PATH."media/profile/$sFile");
+    }
+
+    /**
+     * loadProjectAvatar
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 	public function loadProjectAvatar() {
+
 		global $oProjects;
 		$filename = $_FILES['uploadavatar']['name'];
-		$filename = str_replace(" ", "_", "$filename"); 
-		$filename = htmlentities($filename); 
-		$filename = strtolower($filename);
-		$dateityp = GetImageSize($_FILES['uploadavatar']['tmp_name']); 
-		if($dateityp[2] == 2) { 
-			if($_FILES['uploadavatar']['size'] <  2048000) {
-				if($_FILES['uploadavatar']['size'] <  2048000) { 
-					move_uploaded_file($_FILES['uploadavatar']['tmp_name'], PATH."tmp/media/$filename"); 
-					$file        = PATH."tmp/media/$filename"; 
-					$target    	 = PATH."media/projects/$filename"; 
-					$max_width   = "150";
-					$max_height  = "150";
-					$quality     = "90";
-					$src_img     = imagecreatefromjpeg($file); 
-					$picsize     = getimagesize($file); 
-					$src_width   = $picsize[0]; 
-					$src_height  = $picsize[1]; 
-							   
-					if($src_width > $src_height){ 
-						if($src_width > $max_width){ 
-							$convert = $max_width/$src_width; 
-							$dest_width = $max_width; 
-							$dest_height = ceil($src_height*$convert); 
-						} else { 
-							$dest_width = $src_width; 
-							$dest_height = $src_height; 
-						} 
-					} else { 
-						if($src_height > $max_height){ 
-							$convert = $max_height/$src_height; 
-							$dest_height = $max_height; 
-							$dest_width = ceil($src_width*$convert); 
-						} else { 
-							$dest_height = $src_height; 
-							$dest_width = $src_width; 
-						} 
-					} 
-					$dst_img = imagecreatetruecolor($dest_width,$dest_height); 
-					imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $dest_width, $dest_height, $src_width, $src_height); 
-					imagejpeg($dst_img, $target, $quality); 
-					unlink(PATH."tmp/media/$filename");
-					$oProjects->saveProjectAvatar($filename);
-				}
-			}
-		}
+        if (!empty($filename)){
+            $filename = str_replace(" ", "_", "$filename");
+            $filename = htmlentities($filename);
+            $filename = strtolower($filename);
+            $dateityp = GetImageSize($_FILES['uploadavatar']['tmp_name']);
+            if($dateityp[2] == 2) {
+                if($_FILES['uploadavatar']['size'] <  2048000) {
+                    if($_FILES['uploadavatar']['size'] <  2048000) {
+                        move_uploaded_file($_FILES['uploadavatar']['tmp_name'], PATH."tmp/media/$filename");
+                        $file        = PATH."tmp/media/$filename";
+                        $target    	 = PATH."media/projects/$filename";
+                        $max_width   = "150";
+                        $max_height  = "150";
+                        $quality     = "90";
+                        $src_img     = imagecreatefromjpeg($file);
+                        $picsize     = getimagesize($file);
+                        $src_width   = $picsize[0];
+                        $src_height  = $picsize[1];
+
+                        if($src_width > $src_height){
+                            if($src_width > $max_width){
+                                $convert = $max_width/$src_width;
+                                $dest_width = $max_width;
+                                $dest_height = ceil($src_height*$convert);
+                            } else {
+                                $dest_width = $src_width;
+                                $dest_height = $src_height;
+                            }
+                        } else {
+                            if($src_height > $max_height){
+                                $convert = $max_height/$src_height;
+                                $dest_height = $max_height;
+                                $dest_width = ceil($src_width*$convert);
+                            } else {
+                                $dest_height = $src_height;
+                                $dest_width = $src_width;
+                            }
+                        }
+                        $dst_img = imagecreatetruecolor($dest_width,$dest_height);
+                        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $dest_width, $dest_height, $src_width, $src_height);
+                        imagejpeg($dst_img, $target, $quality);
+                        unlink(PATH."tmp/media/$filename");
+                        $oProjects->saveProjectAvatar($filename);
+                    }
+                }
+            }
+        }
 	}
-	
+
+    /**
+     * loadMedia2Task
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function loadMedia2Task() {
+
 		global $oUsers;
 		$filename = $_FILES['upload']['name'];
 		$filename = str_replace(" ", "_", "$filename"); 
@@ -129,7 +168,12 @@ class aw_media extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * getFiles2Task
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getFiles2Task() {
 		$sSelectMedias = "
 			SELECT * FROM awmedia WHERE awproject = '".$this->getParameter('project')."' && awtask = '".$this->getParameter('task')."'
@@ -137,7 +181,12 @@ class aw_media extends aw_base
 		$oResult = $this->_db->query($sSelectMedias,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * deleteMedia
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function deleteMedia() {
 		$iTaskId = $this->getParameter('task');
 		$iProjectId = $this->getParameter('project');

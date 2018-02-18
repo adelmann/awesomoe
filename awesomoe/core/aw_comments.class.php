@@ -1,11 +1,26 @@
 <?php
+
+/**
+ * Class aw_comments
+ */
 class aw_comments extends aw_base
 {
+
+    /**
+     * aw_comments constructor.
+     */
 	public function __construct() {
+
 		parent::__construct();	
 	}
-	
+
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function save() {
+
 		$actDateTime = date('Y-m-d H:i:s');
 		if (!empty($this->getParameter('awid'))) {
 			$sSaveComment  = "UPDATE awcomments SET awdesc = '".addslashes($this->getParameter('awdesc'))."' WHERE awid = '".$this->getParameter('awid')."'";
@@ -25,17 +40,37 @@ class aw_comments extends aw_base
 		$oNotification->notificationHandler(1);
 		return true;
 	}
-	
+
+    /**
+     * getComment4Task
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getComment4Task() {
+
 		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
 		$sSelect = "SELECT * FROM awcomments WHERE awprojectid = '".$iProjectId."' AND awtaskid = '".$iTaskId."' ORDER BY awdate;";
 		$aResult = $this->_db->query($sSelect,'assoc');
-		if (!empty($aResult['awdesc'])){$aResult['awdesc'] = stripslashes($aResult['awdesc']);}
+
+        $iCount = 0;
+        foreach ($aResult as $aComment) {
+            if (!empty($aComment['awdesc'])){
+                $aResult[$iCount]['awdesc'] = html_entity_decode(stripslashes($aComment['awdesc']));
+            }
+            $iCount++;
+        }
+
 		return $aResult;
 	}
-	
+
+    /**
+     * getComment2Edit
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return mixed|null
+     */
 	public function getComment2Edit() {
+
 		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
 		$iCommentId = $this->getParameter('awcommentid');
@@ -43,8 +78,14 @@ class aw_comments extends aw_base
 		$aResult = $this->_db->getOne($sSelect,'assoc');
 		return $aResult;
 	}
-	
+
+    /**
+     * deleteComment
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function deleteComment() {
+
 		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
 		$iCommentId = $this->getParameter('awcommentid');

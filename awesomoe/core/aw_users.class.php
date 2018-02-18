@@ -1,20 +1,15 @@
 <?php
 
+/**
+ * Class aw_users
+ */
 class aw_users extends aw_base
 {
 	protected $oActUser = 0;
 
-    public $aCountry = array(
-        '0' => 'NOTSETTED',
-        '1' => 'GERMANY',
-        '2' => 'AUSTRIA',
-        '3' => 'SWISS',
-        '4' => 'FRANCE',
-        '5' => 'SPAIN',
-        '6' => 'UNITEDKINGDOM',
-        '7' => 'NETHERLAND',
-    );
-
+    /**
+     * aw_users constructor.
+     */
 	public function __construct() {
 		parent::__construct();
 		global $smarty;
@@ -25,18 +20,25 @@ class aw_users extends aw_base
 		}
 	}
 
+    /**
+     * getUserDatas
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $iId
+     * @return mixed|null
+     */
 	public function getUserDatas($iId) {
-		$sSelect = "
-          SELECT awusers.*, awcompanys.awname as awcompanyname
-            FROM awusers
-             LEFT JOIN awcompanys
-              ON awcompanys.awid = awusers.awcompany
-            WHERE awusers.awid = '".$iId."';";
+		$sSelect = "SELECT * FROM awusers WHERE awid = '".$iId."';";
 		//echo md5($password);
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult;
 	}
 
+    /**
+     * oChoosenUser
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $iId
+     * @return mixed|null
+     */
     public function oChoosenUser($iId) {
         $sSelect = "SELECT * FROM awusers WHERE awid = '".$iId."';";
         //echo md5($password);
@@ -44,23 +46,48 @@ class aw_users extends aw_base
         return $oResult;
     }
 
-
-
+    /**
+     * getUserName
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $iId
+     * @return string
+     */
 	public function getUserName($iId) {
 		$sSelect = "SELECT awname,awlastname FROM awusers WHERE awid = '".$iId."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['awname'].' '.$oResult['awlastname'];
 	}
+
+    /**
+     * GetUserInitial
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $iId
+     * @return string
+     */
 	public function getUserInitial($iId) {
 		$sSelect = "SELECT awname,awlastname FROM awusers WHERE awid = '".$iId."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return substr(str_pad($oResult['awname'],1),0,1).' '.substr(str_pad($oResult['awlastname'],1),0,1);
 	}
+
+    /**
+     * getUserAvatar
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $iId
+     * @return mixed
+     */
 	public function getUserAvatar($iId){
 		$sSelect = "SELECT awavatar FROM awusers WHERE awid = '".$iId."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['awavatar'];
 	}
+
+    /**
+     * saveUserAvatar
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $sImageName
+     * @return bool
+     */
 	public function saveUserAvatar($sImageName){
 		$aSaveParams = $this->getAllParameter($_POST);
 		$sUpdate = "UPDATE awusers SET awavatar = '".$sImageName."' WHERE awid = '".$this->getParameter('awid')."'";
@@ -76,7 +103,11 @@ class aw_users extends aw_base
 		return true;
 	}
 
-
+    /**
+     * getAllUsersRel2Project
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array|null
+     */
 	public function getAllUsersRel2Project() {
         if ($this->getParameter('project') != null) {
             $sSelect = "
@@ -91,6 +122,11 @@ class aw_users extends aw_base
         return null;
 	}
 
+    /**
+     * getAllUsers
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
     public function getAllUsers() {
         $sSelect = "
             SELECT users.*,GROUP_CONCAT(projects.awname SEPARATOR ', ') as projects
@@ -106,7 +142,11 @@ class aw_users extends aw_base
 
     }
 
-
+    /**
+     * getGroupRights
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getGroupRights() {
 		$sSelectGroup = "
 			SELECT awgroups.* FROM awgroups
@@ -118,6 +158,11 @@ class aw_users extends aw_base
 		return $oResult;
 	}
 
+    /**
+     * getUsersFromProject
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getUsersFromProject() {
 		$sSelect = "
 			SELECT awusers.awname,awusers.awlastname,awusers.awid FROM awusers
@@ -129,6 +174,11 @@ class aw_users extends aw_base
 		return $oResult;
 	}
 
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function save() {
 		$aSaveParams = $this->getAllParameter($_POST);
         $actDateTime = date('Y-m-d H:i:s');
@@ -142,7 +192,7 @@ class aw_users extends aw_base
                 }
             }
             $sUpdate .= " awupdate = '".$actDateTime."'";
-            if ($aSaveParams['awpassword'] != '') {
+            if (isset($aSaveParams['awpassword']) && $aSaveParams['awpassword'] != '') {
                 $sUpdate .= ", awpassword = '".md5($aSaveParams['awpassword'])."'";
             } else {
                 unset($aSaveParams['awpassword']);
@@ -188,6 +238,11 @@ class aw_users extends aw_base
         }
 	}
 
+    /**
+     * delete
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
     protected function delete() {
         $iUserId = $this->getParameter('user');
         $sDELETE = "
@@ -205,6 +260,11 @@ class aw_users extends aw_base
         return true;
     }
 
+    /**
+     * getStartInfos
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
     public function getStartInfos() {
         global $oConfig,$oProjects;
 
@@ -244,7 +304,7 @@ class aw_users extends aw_base
                     }
                 }
                 if ($entry['awdeadline'] != '0000-00-00' && $entry['awowner'] == $_SESSION['awid']) {
-
+                	
 				   if (strtotime($entry['awdeadline']) < time()) {
                         $iCountOverTime++;
                     }
@@ -277,14 +337,4 @@ class aw_users extends aw_base
         );
         return $aReturn;
     }
-
-    public function getCountryById($iId){
-        return $this->aCountry[$iId];
-    }
-
-    public function getAllCountrys() {
-        return $this->aCountry;
-    }
-	
-
 }

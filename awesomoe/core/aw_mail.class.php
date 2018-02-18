@@ -1,12 +1,26 @@
 <?php
+
+/**
+ * Class aw_mail
+ */
 class aw_mail
 {
-
+    /**
+     * aw_mail constructor.
+     */
     public function __construct() {
 
     }
 
+    /**
+     * sendmail
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param string $sRecipient
+     * @param string $sSubject
+     * @param string $sContent
+     */
     public function sendmail($sRecipient,$sSubject,$sContent){
+
         global $oConfig;
         $this->_oConfig = $oConfig;
         $sTitle = $this->_oConfig->getConfigParam('sTitle');
@@ -18,7 +32,6 @@ class aw_mail
             'From: ' . $sSendMail . "\r\n" .
             'Reply-To: ' . $sSendMail . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
-
 
         mail($sRecipient, $sTitle.' - '.$sSubject, $sContent, $header);
     }

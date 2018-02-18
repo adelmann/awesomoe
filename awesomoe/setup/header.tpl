@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title><?php $this->translateContent('TITLE');?></title>
+    <title>awesomoe Setup</title>
 
     <!-- Bootstrap core CSS -->
     <link href="src/css/bootstrap.min.css" rel="stylesheet">
@@ -36,13 +36,9 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <img src="../media/system/logo-transparent-bright.png" />
+            <a class="navbar-brand" href="#">awesomoe Setup</a>
         </div>
 
-        <ul class="nav navbar-nav navbar-right" id="lngSwitch">
-            <li><a href="#" rel="de"><img src="../media/system/de.png" /></a></li>
-            <li><a href="#" rel="en"><img src="../media/system/en.png" /></a></li>
-        </ul>
     </div>
 </nav>
 
@@ -52,18 +48,18 @@
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><?php $this->translateContent('STEPS');?></h3>
+                    <h3 class="panel-title">STEPs</h3>
                 </div>
                 <div class="panel-body">
-                    <?php $this->translateContent('INFO');?>  <?php if ($this->position==0 || !$this->position) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position > 0) {echo "<span class='label label-success'>√</span>";} ?>
+                    SETUP  <?php if ($this->position==0 || !$this->position) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position > 0) {echo "<span class='label label-success'>√</span>";} ?>
                     <hr>
-                    <?php $this->translateContent('SYSTEMCHECK');?> <?php if ($this->position==2) {echo "<span class='label label-primary'><</span>";}?><?php if ($this->position > 2) {echo "<span class='label label-success'>√</span>";} ?>
+                    SYSTEM CHECK <?php if ($this->position==2) {echo "<span class='label label-primary'><</span>";}?><?php if ($this->position > 2) {echo "<span class='label label-success'>√</span>";} ?>
                     <hr>
-                    <?php $this->translateContent('DATABASE');?> <?php if ($this->position>=3 && $this->position<=4 ) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position > 4) {echo "<span class='label label-success'>√</span>";} ?>
+                    DATABASE <?php if ($this->position==3) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position > 3) {echo "<span class='label label-success'>√</span>";} ?>
                     <hr>
-                    <?php $this->translateContent('CONFIGURATION');?> <?php if ($this->position==5) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position >= 6) {echo "<span class='label label-success'>√</span>";} ?>
+                    CONFIGURATION <?php if ($this->position==4) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position >= 5) {echo "<span class='label label-success'>√</span>";} ?>
                     <hr>
-                    <?php $this->translateContent('INSTALL');?> <?php if ($this->position==6) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position > 7) {echo "<span class='label label-success'>√</span>";} ?>
+                    INSTALL <?php if ($this->position==5) {echo "<span class='label label-primary'><</span>";} ?><?php if ($this->position > 5) {echo "<span class='label label-success'>√</span>";} ?>
                 </div>
             </div>
         </div>
@@ -71,11 +67,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <?php $this->translateContent('SETUP');?>:
-                    	<?php if ($this->position==2) {$this->translateContent('SYSTEMCHECK');}?>
-                    	<?php if ($this->position==3 || $this->position==4 ) {$this->translateContent('DATABASE');}?>
-                    	<?php if ($this->position==5) {$this->translateContent('CONFIGURATION');}?>
-                    	<?php if ($this->position==6) {$this->translateContent('INSTALL');}?>
+                    	SETUP
+                    	<?php if ($this->position==1) {echo " - SYSTEM CHECK";}?>
+                    	<?php if ($this->position==2) {echo " - DATABASE";}?>
+                    	<?php if ($this->position==3) {echo " - CONFIGURATION";}?>
+                    	<?php if ($this->position==4) {echo " - INSTALL";}?>
                     </h3>
                 </div>
                 <div class="panel-body">

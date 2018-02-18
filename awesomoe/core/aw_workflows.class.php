@@ -1,6 +1,13 @@
 <?php
+
+/**
+ * Class aw_workflows
+ */
 class aw_workflows extends aw_base
 {
+    /**
+     * aw_workflows constructor.
+     */
 	public function __construct() {
 		parent::__construct();
 		if(!empty($_SESSION['awid'])) {
@@ -8,8 +15,12 @@ class aw_workflows extends aw_base
 			$aRights = $this->getRights4Projects();
 		}
 	}
-	
-	
+
+    /**
+     * getWorkflows
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getWorkflows() {
 		global $oUsers;
 		$aUserRights = $oUsers->getUserDatas($_SESSION['awid']);
@@ -19,12 +30,22 @@ class aw_workflows extends aw_base
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * getRights4Projects
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 	protected function getRights4Projects() {
 		global $oUsers;
 		$aUserRights = $oUsers->getGroupRights();
 	}
-	
+
+    /**
+     * getWorkflow
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param bool $workflowid
+     * @return array
+     */
 	public function getWorkflow($workflowid = false) {
 		if ($workflowid == false) {
 			$sSelect = "SELECT * FROM awworkflowsteps WHERE awworkflow = '".$this->getParameter('workflow')."' ORDER BY awsort;";
@@ -36,8 +57,12 @@ class aw_workflows extends aw_base
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
-	
+
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function save() {
 		if ($this->getParameter('awid') != '-1') {
 			$aSaveParams = $this->getAllParameter($_POST);
@@ -108,7 +133,12 @@ class aw_workflows extends aw_base
 			return true;
 		}
 	}
-	
+
+    /**
+     * deletestep
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function deletestep() {
 		$iAwid = $this->getParameter('awid');
 		$iWorkflowStepId = $this->getParameter('delitem');
@@ -127,7 +157,11 @@ class aw_workflows extends aw_base
 		return true;
 	}
 
-	/* TODO */
+    /**
+     * delete
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function delete() {
 		$iWorkflow = $this->getParameter('workflow');
 		$sDELETE = "
@@ -144,7 +178,12 @@ class aw_workflows extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * addWorkflow
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function addWorkflow() {
 		if ($this->getParameter('awid') == '-1') {
 			$sUpdateProject = "INSERT INTO awworkflow (awname) VALUES ('".$this->getParameter('awname')."');";

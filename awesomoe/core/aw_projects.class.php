@@ -1,39 +1,48 @@
 <?php
 
+/**
+ * Class aw_projects
+ */
 class aw_projects extends aw_base
 {
 	protected $oActUser = 0;
-    private $iProjectID;
+
+    /**
+     * aw_projects constructor.
+     */
 	public function __construct() {
 		parent::__construct();
 		if(!empty($_SESSION['awid'])) {
 			$userid = $_SESSION['awid'];
 			$aRights = $this->getRights4Projects();
 		}
-
-		$sActPID = $this->getParameter('project');
-		if (is_numeric($sActPID)) {
-            $this->iProjectID = $sActPID;
-        } else {
-            $sGetProjectIDSQL = "
-                SELECT awid FROM awprojects WHERE awprefix = '".$sActPID."' LIMIT 1;
-            ";
-            $oResult = $this->_db->getOne($sGetProjectIDSQL,'assoc');
-            $this->iProjectID = $oResult['awid'];
-        }
 	}
-	
+
+    /**
+     * getRights4Projects
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 	protected function getRights4Projects() {
 		global $oUsers;
 		$aUserRights = $oUsers->getGroupRights();
 	}
-	
+
+    /**
+     * getProject
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return mixed|null
+     */
 	public function getProject() {
-		$sSelect = "SELECT * FROM awprojects WHERE awid = '".$this->iProjectID."';";
+		$sSelect = "SELECT * FROM awprojects WHERE awid = '".$this->getParameter('project')."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * getProjects
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getProjects() {
 		global $oUsers;
 		$aUserRights = $oUsers->getUserDatas($_SESSION['awid']);
@@ -51,43 +60,68 @@ class aw_projects extends aw_base
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
-	public function getProjectName($id) {
-		$sSelect = "SELECT awname FROM awprojects WHERE awid='".$id."'";
+
+    /**
+     * getProjectName
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $iId
+     * @return string
+     */
+	public function getProjectName($iId) {
+		$sSelect = "SELECT awname FROM awprojects WHERE awid='".$iId."'";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['awname'];
 	}
-	
+
+    /**
+     * getTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getTasks() {
 		$sSelect = "
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE awproject = '".$this->iProjectID."';";
+			WHERE awproject = '".$this->getParameter('project')."';";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * getTask
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return mixed|null
+     */
 	public function getTask() {
 		$sSelect = "
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE tasks.awproject = '".$this->iProjectID."' AND tasks.awid='".$this->getParameter('task')."';";
+			WHERE tasks.awproject = '".$this->getParameter('project')."' AND tasks.awid='".$this->getParameter('task')."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult;
 	}
-	
-	
+
+    /**
+     * countTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $projectid
+     * @return mixed
+     */
 	public function countTasks($projectid) {
 		$sSelect = "SELECT count(*) as count FROM awtasks WHERE awproject = '".$projectid."' AND awworkflowpos != '99';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['count'];
 	}
-	
-	
+
+    /**
+     * delete
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function delete() {
-		$iProjectId = $this->iProjectID;
+		$iProjectId = $this->getParameter('project');
 		$sDELETE = "
 				DELETE FROM awprojects WHERE awprojects.awid = '".$iProjectId."';
 			";
@@ -102,7 +136,12 @@ class aw_projects extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array|bool
+     */
 	protected function save() {
 		if ($this->getParameter('awid') != '-1') {
 			$aSaveParams = $this->getAllParameter($_POST);
@@ -168,8 +207,6 @@ class aw_projects extends aw_base
 			
 			$this->_db->startTransaction();
 			try{
-				
-				
 				$this->_db->query($sUpdateProject);
 				$this->_db->commit();
 			}
@@ -199,7 +236,7 @@ class aw_projects extends aw_base
 				}
 			}
 			$sUpdateProject .= "(".$keynames.") VALUES (".$keyvals.")";
-			//echo $sUpdateProject;die();
+
 			$this->_db->startTransaction();
 			try{				
 				$iInsertId = $this->_db->query($sUpdateProject, 'id');
@@ -210,11 +247,17 @@ class aw_projects extends aw_base
 				$this->_db->rollback();
 				print_r($e);die();
 				return false;
-			};
+			}
 			return true;
 		}
 	}
-	
+
+    /**
+     * saveProjectAvatar
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $sImageName
+     * @return bool
+     */
 	public function saveProjectAvatar($sImageName){
 		$aSaveParams = $this->getAllParameter($_POST);
 		$sUpdate = "UPDATE awprojects SET awpicture = '".$sImageName."' WHERE awid = '".$aSaveParams['awid']."'";

@@ -1,27 +1,28 @@
 <?php
 
+/**
+ * Class aw_tasks
+ */
 class aw_tasks extends aw_base
 {
 	protected $oActUser = 0;
-    private $iProjectID;
+
+    /**
+     * aw_tasks constructor.
+     */
 	public function __construct() {
 		parent::__construct();
 		if(!empty($_SESSION['awid'])) {
 			$userid = $_SESSION['awid'];
+			//$aRights = $this->getRights4Projects();
 		}
-        $sActPID = $this->getParameter('project');
-        if (is_numeric($sActPID)) {
-            $this->iProjectID = $sActPID;
-        } else {
-            $sGetProjectIDSQL = "
-                SELECT awid FROM awprojects WHERE awprefix = '".$sActPID."' LIMIT 1;
-            ";
-            $oResult = $this->_db->getOne($sGetProjectIDSQL,'assoc');
-            $this->iProjectID = $oResult['awid'];
-        }
-
 	}
-	
+
+    /**
+     * getTasks4Project
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getTasts4Project() {
 		global $oUsers;
 		$aUserRights = $oUsers->getUserDatas($_SESSION['awid']);
@@ -34,13 +35,18 @@ class aw_tasks extends aw_base
 						ON u2p.awuserid = '".$_SESSION['awid']."'
 						AND u2p.awprojectid = awprojects.awid
 					INNER JOIN awtasks as tasks
-						ON tasks.awproject = '".$this->iProjectID."'
+						ON tasks.awproject = '".$this->getParameter('project')."'
 			";
 		}
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * countMyTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return mixed
+     */
 	public function countMyTasks() {
 		$sCountTasks = "
 			SELECT count(*) as counttasks FROM awtasks WHERE awowner = '".$_SESSION['awid']."' AND awworkflowpos != '99'
@@ -48,6 +54,12 @@ class aw_tasks extends aw_base
 		$oResult = $this->_db->query($sCountTasks,'assoc');
 		return $oResult[0]['counttasks'];
 	}
+
+    /**
+     * getLastWorkedTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getLastWorkedTasks() {
 		$sGetLastTasks = "
 			SELECT tasks.*,prio.awname,prio.awcolor,projects.awname, workflow.awname as workflowpos FROM awtasks as tasks
@@ -63,38 +75,57 @@ class aw_tasks extends aw_base
 		$oResult = $this->_db->query($sGetLastTasks,'assoc');
 		return $oResult;
 	}
-	
-	public function getTaskName($id) {
-		$sSelect = "SELECT awtitle FROM awtasks WHERE awid='".$id."'";
+
+    /**
+     * getTaskName
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param integer $id
+     * @return string
+     */
+	public function getTaskName($iId) {
+		$sSelect = "SELECT awtitle FROM awtasks WHERE awid='".$iId."'";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['awtitle'];
 	}
-	
+
+    /**
+     * getTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getTasks() {
 		$sSelect = "
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE awproject = '".$this->iProjectID."' ORDER BY tasks.awprio DESC;";
+			WHERE awproject = '".$this->getParameter('project')."' ORDER BY tasks.awprio DESC;";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
 
+    /**
+     * getArchive
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getArchive() {
 		$sSelect = "
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE awproject = '".$this->iProjectID."' AND awworkflowpos = 99 ORDER BY tasks.awprio DESC;";
+			WHERE awproject = '".$this->getParameter('project')."' AND awworkflowpos = 99 ORDER BY tasks.awprio DESC;";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
 
-
-	
+    /**
+     * getOnlyMyTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getOnlyMyTasks() {
 		$sSelect = "
-			SELECT tasks.*,prio.awname, prio.awcolor, project.awname as projectname, project.awprefix as prefix, project.awid as pid
+			SELECT tasks.*,prio.awname, prio.awcolor, project.awname as projectname
 				FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 					ON prio.awid = tasks.awprio
@@ -104,21 +135,31 @@ class aw_tasks extends aw_base
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * getTask
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return mixed|null
+     */
 	public function getTask() {
 		$sSelect = "
 			SELECT tasks.*,prio.awname, prio.awcolor FROM awtasks as tasks
 				LEFT JOIN awprio as prio
 				ON prio.awid = tasks.awprio
-			WHERE tasks.awproject = '".$this->iProjectID."' AND tasks.awid='".$this->getParameter('task')."';";
+			WHERE tasks.awproject = '".$this->getParameter('project')."' AND tasks.awid='".$this->getParameter('task')."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
-		$oResult['awdescription'] = stripslashes($oResult['awdescription']);
+		$oResult['awdescription'] = html_entity_decode(stripslashes($oResult['awdescription']));
 		return $oResult;
 	}
-	
+
+    /**
+     * getWorkflowList
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getWorkflowList() {
-        if (!empty($this->iProjectID)) {
-            $projectid = $this->iProjectID;
+        if (!empty($this->getParameter('project'))) {
+            $projectid = $this->getParameter('project');
         } else {
             $projectid = $this->getParameter('awprojectid');
         }
@@ -136,9 +177,14 @@ class aw_tasks extends aw_base
 		return $oResult;
 	}
 
+    /**
+     * maxSteps
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return integer
+     */
 	public function maxSteps() {
-		if (!empty($this->iProjectID)) {
-			$projectid = $this->iProjectID;
+		if (!empty($this->getParameter('project'))) {
+			$projectid = $this->getParameter('project');
 		} else {
 			$projectid = $this->getParameter('awprojectid');
 		}
@@ -154,8 +200,13 @@ class aw_tasks extends aw_base
 		return $oResult[0]['maxstep'];
 	}
 
+    /**
+     * set2archive
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function set2archive(){
-		$sUpdateTask = "UPDATE awtasks SET awworkflowpos = '99' WHERE awproject='".$this->iProjectID."' AND awid='".$this->getParameter('task')."'";
+		$sUpdateTask = "UPDATE awtasks SET awworkflowpos = '99' WHERE awproject='".$this->getParameter('project')."' AND awid='".$this->getParameter('task')."'";
 		$this->_db->startTransaction();
 			try{
 				$this->_db->query($sUpdateTask);
@@ -167,18 +218,33 @@ class aw_tasks extends aw_base
 			};
 	}
 
+    /**
+     * getPrioList
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getPrioList() {
 		$sSelect = "SELECT * FROM awprio ORDER BY awsort;";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * getUser2Project
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getUser2Project() {
 		$sSelect = "SELECT * FROM awprio;";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
 
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array|bool
+     */
 	protected function save() {
 		$oHistory = new aw_history();
 		if ($this->getParameter('awid') != '-1') {
@@ -209,7 +275,7 @@ class aw_tasks extends aw_base
 			$oNotification = new aw_notification();
 			$oNotification->notificationHandler(4);
 
-			$oHistory->getOriginalval2Compare('2','1',$this->getAllParameter($_POST));
+			$oHistory->getOriginalval2Compare(2,1,$this->getAllParameter($_POST));
 
 			$this->_db->startTransaction();
 			try{
@@ -262,7 +328,7 @@ class aw_tasks extends aw_base
 			$keynames .= "awnumber,awcreate,awcreator, awupdate";
 			$keyvals .= $maxCounter.",'".date("Y-m-d H:i:s")."','".$_SESSION['awid']."','".date("Y-m-d H:i:s")."'";
 			$sUpdateTask .= "(".$keynames.") VALUES (".$keyvals.")";
-			$oHistory->getOriginalval2Compare('2','2',$this->getAllParameter($_POST));
+			$oHistory->getOriginalval2Compare(2,2,$this->getAllParameter($_POST));
 			$this->_db->startTransaction();
 			try{
 				$iInsertId = $this->_db->query($sUpdateTask, 'id');
@@ -279,15 +345,25 @@ class aw_tasks extends aw_base
 			return true;
 		}
 	}
-	
+
+    /**
+     * getLastId
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return integer
+     */
 	protected function getLastId(){
-		$sSelect = "SELECT max(awnumber) as count FROM awtasks WHERE awproject='".$this->iProjectID."';";
+		$sSelect = "SELECT max(awnumber) as count FROM awtasks WHERE awproject='".$this->getParameter('project')."';";
 		$oResult = $this->_db->getOne($sSelect,'assoc');
 		return $oResult['count'];
 	}
-	
+
+    /**
+     * delete
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function delete() {
-		$iProjectId = $this->iProjectID;
+		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
 		$sDELETE = "
 				DELETE FROM awtasks WHERE awproject = '".$iProjectId."' AND awid = '".$iTaskId."';
@@ -303,7 +379,12 @@ class aw_tasks extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * changeTaskState
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function changeTaskState() {
 		$sUpdateTask = "UPDATE awtasks SET awworkflowpos = '".$this->getParameter('awworkflowpos')."' WHERE awproject='".$this->getParameter('awprojectid')."' AND awid = '".$this->getParameter('awtaskid')."'";
 		$_GET['awid'] = $this->getParameter('awtaskid');
@@ -312,7 +393,7 @@ class aw_tasks extends aw_base
 		$oNotification->notificationHandler(3);
 
 		$oHistory = new aw_history();
-		$oHistory->getOriginalval2Compare('2','1',$_GET);
+		$oHistory->getOriginalval2Compare(2,1,$_GET);
 
 		$this->_db->startTransaction();
 		try{
@@ -325,7 +406,12 @@ class aw_tasks extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * changeAssignee
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function changeAssignee() {
 		$iOwner =  (int)$this->getParameter('awowner');
 		$sUpdateTask = "UPDATE awtasks SET awowner = '".$iOwner."' WHERE awproject='".$this->getParameter('awprojectid')."' AND awid = '".$this->getParameter('awtaskid')."'";
@@ -335,7 +421,7 @@ class aw_tasks extends aw_base
 		$oNotification->notificationHandler(5);
 
 		$oHistory = new aw_history();
-		$oHistory->getOriginalval2Compare('2','1',$_GET);
+		$oHistory->getOriginalval2Compare(2,1,$_GET);
 		$this->_db->startTransaction();
 		try{
 			$this->_db->query($sUpdateTask);
@@ -347,7 +433,12 @@ class aw_tasks extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * getRemainingTime
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return false|int
+     */
 	public function getRemainingTime() {
 		$taskinfo = $this->getTask();
 		$createdate = StrToTime($taskinfo['awcreate']);
@@ -356,9 +447,14 @@ class aw_tasks extends aw_base
 		$hours = $diff / ( 60 * 60 );
 		return $diff;
 	}
-	
+
+    /**
+     * workedtime
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return string
+     */
 	public function workedtime() {
-		$sSelect = "SELECT awtime FROM awworklog WHERE awtaskid='".$this->getParameter('task')."' AND awprojectid='".$this->iProjectID."';";
+		$sSelect = "SELECT awtime FROM awworklog WHERE awtaskid='".$this->getParameter('task')."' AND awprojectid='".$this->getParameter('project')."';";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		$hours = 0;
 		$minutes = 0;
@@ -377,8 +473,13 @@ class aw_tasks extends aw_base
 		return $hours.':'.$minutes;
 	}
 
+    /**
+     * getAllActivitys
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getAllActivitys() {
-		$iProjectId = $this->iProjectID;
+		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
 
 		// Worklog
@@ -399,6 +500,13 @@ class aw_tasks extends aw_base
 		return $result;
 	}
 
+    /**
+     * array_sort_by_column
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $array
+     * @param $column
+     * @param int $direction
+     */
 	public function array_sort_by_column(&$array, $column, $direction = SORT_ASC) {
 		$reference_array = array();
 
@@ -408,8 +516,12 @@ class aw_tasks extends aw_base
 
 		array_multisort($reference_array, $direction, $array);
 	}
-	
-	
+
+    /**
+     * getOverTimedTasks
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getOverTimedTasks() {
 		$sSelect = "
 			SELECT tasks.*,prio.awname, prio.awcolor, project.awname as projectname

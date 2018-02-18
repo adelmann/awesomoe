@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * Class aw_report
+ */
 class aw_report extends aw_base
 {
     protected $oActUser = 0;
 
+    /**
+     * aw_report constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -12,6 +18,11 @@ class aw_report extends aw_base
         }
     }
 
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
     public function save() {
         if (!empty($this->getParameter('awusers'))) {
             $awusers = '';
@@ -79,6 +90,11 @@ class aw_report extends aw_base
         };
     }
 
+    /**
+     * delete
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
     public function delete() {
         $iProjectid = $this->getParameter('awproject');
         $iAwid = $this->getParameter('awid');
@@ -99,6 +115,11 @@ class aw_report extends aw_base
         };
     }
 
+    /**
+     * getAllReports4Project
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
     public function getAllReports4Project() {
         $iProjectID = $this->getParameter('project');
         $sSQL = "
@@ -108,6 +129,11 @@ class aw_report extends aw_base
         return $oResult;
     }
 
+    /**
+     * countAllReports4Project
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return mixed
+     */
     public function countAllReports4Project() {
         $iProjectID = $this->getParameter('project');
         $sSQL = "
@@ -117,6 +143,11 @@ class aw_report extends aw_base
         return $oResult[0]['countreports'];
     }
 
+    /**
+     * generateReport
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
     public function generateReport() {
         $iProjectID = $this->getParameter('awproject');
         $sBegins    = $this->getParameter('awbegins');
@@ -178,7 +209,6 @@ class aw_report extends aw_base
             $iCounter++;
         }
 
-
         $sSQL .= "
                 INNER JOIN awusers as user
                     ON user.awid = worklog.awuser
@@ -192,7 +222,13 @@ class aw_report extends aw_base
         $oResult = $this->_db->query($sSQL,'assoc');
         return $oResult;
     }
-    
+
+    /**
+     * workedtime
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param $aResult
+     * @return string
+     */
     public function workedtime($aResult) {
 		$hours = 0;
 		$minutes = 0;

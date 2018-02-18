@@ -181,23 +181,6 @@ CREATE TABLE IF NOT EXISTS `awworklog` (
   PRIMARY KEY (`awid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `awcompanys` (
-  `awid` int(11) NOT NULL AUTO_INCREMENT,
-  `awname` varchar(50),
-  `awmail` varchar(50) NOT NULL,
-  `awphone` varchar(20),
-  `awmobile` varchar(20),
-  `awzip` int(10),
-  `awcity` varchar(20),
-  `awstreet` varchar(50) NOT NULL,
-  `awcountry` int(2) NOT NULL,
-  `awavatar` varchar(255),
-  `awurl` varchar(255),
-  `awadded` date NOT NULL,
-  `awupdate` date NOT NULL,
-  PRIMARY KEY (`awid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 INSERT INTO `awconfig` (`awid`, `awvarname`, `awvartype`, `awvarvalue`) VALUES
 (1, 'sTitle', 'str', 'awesomeo'),
 (2, 'sSkin', 'str', 'skin-blue'),
@@ -208,8 +191,7 @@ INSERT INTO `awconfig` (`awid`, `awvarname`, `awvartype`, `awvarvalue`) VALUES
 (7, 'iDays4EndTime', 'int', '2'),
 (8, 'sMailName', 'str', 'awesomoe.de'),
 (9, 'sMailAdress', 'str', ''),
-(10, 'sVersion', 'str', '1.0'),
-(11, 'iAgileType', 'int', '2') ;
+(10, 'sVersion', 'str', '0.7') ;
 
 INSERT INTO `awgroups` (`awid`, `awname`, `awproject`, `awtask`, `awtrack`, `awfiles`, `awadmin`) VALUES
 (1, 'Admin', '1,1,1,1', '1,1,1,1', '1,1,1,1', '1,1,1,1', 1),
@@ -221,6 +203,9 @@ INSERT INTO `awprio` (`awid`, `awname`, `awsort`, `awcolor`) VALUES
 (2, 'Mittel', 2, 4),
 (3, 'Hoch', 3, 2),
 (4, 'Blocker', 4, 3) ;
+
+INSERT INTO `awusers` (`awid`, `awmail`, `awpassword`, `awname`, `awlastname`, `awcompany`, `awphone`, `awmobile`, `awzip`, `awcity`, `awstreet`, `awcountry`, `awgender`, `awavatar`, `awlastlogin`, `awurl`, `awposition`, `awadded`, `awstate`, `awgroup`, `awupdate`) VALUES
+(1, 'new@awesomoe.de', '21232f297a57a5a743894a0e4a801fc3', 'John', 'Doe', 1, '', '', 79098, 'Freiburg', '', 1, 1, '', NOW(), '', '', NOW(), 0, 1, NOW()) ;
 
 INSERT INTO `awworkflow` (`awid`, `awname`) VALUES
 (1, 'Standard') ;

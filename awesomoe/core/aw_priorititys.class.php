@@ -1,23 +1,45 @@
 <?php
 
+/**
+ * Class aw_priorititys
+ */
 class aw_priorititys extends aw_base
 {
+
+    /**
+     * aw_priorititys constructor.
+     */
 	public function __construct() {
 		parent::__construct();
 	}
-	
+
+    /**
+     * getAllPrioritys
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getAllPrioritys() {
 		$sSelect = "SELECT * FROM awprio ORDER BY awsort";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
-	
+
+    /**
+     * getPriority
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getPriority() {
 		$sSelect = "SELECT * FROM awprio WHERE awid = '".$this->getParameter('priority')."';";
 		$oResult = $this->_db->query($sSelect,'assoc');
 		return $oResult;
 	}
 
+    /**
+     * delete
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function delete() {
 		$iPrioID = $this->getParameter('priority');
 		$sDELETE = "
@@ -34,7 +56,12 @@ class aw_priorititys extends aw_base
 		};
 		return true;
 	}
-	
+
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	protected function save() {
 		if ($this->getParameter('awid') != '-1') {
 			$aSaveParams = $this->getAllParameter($_POST);
@@ -67,8 +94,6 @@ class aw_priorititys extends aw_base
 						
 			$this->_db->startTransaction();
 			try{
-				
-				
 				$this->_db->query($sUpdateProject);
 				$this->_db->commit();
 			}

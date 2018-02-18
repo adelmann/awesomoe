@@ -1,11 +1,23 @@
 <?php
+
+/**
+ * Class aw_worklog
+ */
 class aw_worklog extends aw_base
 {
+    /**
+     * aw_worklog constructor.
+     */
 	public function __construct() {
 		parent::__construct();
 		
 	}
-	
+
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function save() {
 		$actDateTime = date('Y-m-d H:i:s');
 		$oHistory = new aw_history();
@@ -27,7 +39,12 @@ class aw_worklog extends aw_base
 		$oNotification->notificationHandler(2);
 		return true;
 	}
-	
+
+    /**
+     * getWorklog4Task
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getWorklog4Task() {
 		$iProjectId = $_GET['project'];
 		$iTaskId = $_GET['task'];
@@ -35,7 +52,12 @@ class aw_worklog extends aw_base
 		$aResult = $this->_db->query($sSelect,'assoc');
 		return $aResult;
 	}
-	
+
+    /**
+     * getWorklog2Edit
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getWorklog2Edit() {
 		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
@@ -44,7 +66,12 @@ class aw_worklog extends aw_base
 		$aResult = $this->_db->getOne($sSelect,'assoc');
 		return $aResult;
 	}
-	
+
+    /**
+     * deleteWorklog
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
 	public function deleteWorklog() {
 		$iProjectId = $this->getParameter('project');
 		$iTaskId = $this->getParameter('task');
