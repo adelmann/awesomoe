@@ -48,6 +48,8 @@ class install
 		if (!$this->position || $this->position == 1) {
 			include "step1.tpl";
 		} elseif($this->position == 2) {
+			$_SESSION['aw_language'] = trim($_GET['language']);
+			$_SESSION['aw_Check4Updates'] = trim($_GET['Check4Updates']);
 			include "step2.tpl";
 		} elseif($this->position == 3) {
 			include "step3.tpl";
@@ -139,11 +141,18 @@ class install
                 
 				date_default_timezone_set('Europe/Berlin');
             ";
-            if (isset($_COOKIE["awesomoeSetup"])) {
+            if (isset($_SESSION['aw_server'])) {
 
 			$txt .= "
-			define('DEFAULTLANG', '".$_COOKIE['awesomoeSetup']."');";
+			define('DEFAULTLANG', '".$_SESSION['aw_server']."');";
             }
+
+			if (isset($_SESSION['aw_Check4Updates'])) {
+
+				$txt .= "
+			define('CHECK4UPDATES', '".$_SESSION['aw_Check4Updates']."');";
+			}
+
             $txt .= "
 			define('AUTOSELECTLANG', true);
 ?>";

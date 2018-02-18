@@ -13,6 +13,7 @@ $aLang = array(
     'CONFIGURATION'           => 'Configuration',
     'INSTALL'                 => 'Install',
     'SETUP'                   => 'Setup',
+    'STEP1CHECK4UPDATES'      => 'Check coninuesly for updates.',
     'STEP1TEXT'               => '  <h1>awesomoe installation</h1>
                                     <p>This is the installer of awesomoe, project- and taskmanagement.</p>
                                     <p>Please be carefull to delete the setup folder after install.</p>

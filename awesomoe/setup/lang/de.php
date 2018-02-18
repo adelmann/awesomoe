@@ -13,6 +13,7 @@ $aLang = array(
     'CONFIGURATION'           => 'Konfiguration',
     'INSTALL'                 => 'Installieren',
     'SETUP'                   => 'Setup',
+    'STEP1CHECK4UPDATES'      => 'Regelmäßig auf Updates prüfen.',
     'STEP1TEXT'               => '  <h1>awesomoe Installation</h1>
                                     <p>Dies ist die Installationshilfe für das awesomoe Projekt- und Taskmanagement System.</p>
                                     <p>Bitte beachten Sie, dass das Setup Verzeichnis nach der Installation vollständig gelöscht wird.</p>
