@@ -6,6 +6,9 @@
 class report extends aw_report
 {
 
+    /**
+     * report constructor.
+     */
     public function __construct()
     {
         parent::__construct();

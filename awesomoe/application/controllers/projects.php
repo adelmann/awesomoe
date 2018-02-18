@@ -3,6 +3,9 @@
 class projects extends aw_projects
 {
 
+    /**
+     * projects constructor.
+     */
     public function __construct()
     {
         parent::__construct();

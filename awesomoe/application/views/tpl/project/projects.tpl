@@ -39,24 +39,22 @@
 								<div class="row">
 									<div class="col-sm-2 project">
 										{if $project.awpicture}
-											<a href="{$project.awprefix}">
+											<a href="index.php?cl=tasklist&project={$project.awid}">
 												<img class="img-circle" src="media/projects/{$project.awpicture}">
 											</a>
 										{elseif $project.awprefix}
-											<a href="{$project.awprefix}">
+											<a href="index.php?cl=tasklist&project={$project.awid}">
 												<div class="img-circle">{$project.awprefix}</div>
 											</a>
 										{else}
-											<a href="{$project.awprefix}">
+											<a href="index.php?cl=tasklist&project={$project.awid}">
 												<div class="img-circle">{$project.awname}</div>
 											</a>
 										{/if}
 									</div>
 									<div class="col-sm-6">
-										{if $project.awdescription != ''}
-											{awmultilang ident="DESCRIPTION"}:<br>
-											{$project.awdescription}
-										{/if}
+										{awmultilang ident="DESCRIPTION"}<br>
+										{$project.awdescription}
 									</div>
 									<div class="col-md-4">
 									

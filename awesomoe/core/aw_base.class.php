@@ -1,10 +1,18 @@
 <?php
 
+/**
+ * Class aw_base
+ */
 class aw_base extends aw_supercfg
 {
 	protected $_db;
+
+    /**
+     * aw_base constructor.
+     */
 	public function __construct() {
-		if (session_id() == "") {
+
+	    if (session_id() == "") {
 			//ini_set('session.save_path',realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/'));
 			session_start();
 		}
@@ -19,10 +27,18 @@ class aw_base extends aw_supercfg
 		$smarty->assign("oUser", $oUsers);
 	}
 
-	public function getParameter($var, $blUnescaped = false) {
-		//Check POST
-		if (!empty($_POST[$var])) { $sParameter = $_POST[$var];}
-		elseif (!empty($_GET[$var])) {$sParameter = $_GET[$var];}
+    /**
+     * getParameter
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param string $sVar
+     * @param bool $blUnescaped
+     * @return mixed|null
+     */
+	public function getParameter($sVar, $blUnescaped = false) {
+
+	    //Check POST
+		if (!empty($_POST[$sVar])) { $sParameter = $_POST[$sVar];}
+		elseif (!empty($_GET[$sVar])) {$sParameter = $_GET[$sVar];}
 		else {$sParameter = null;}
 
 		if ($blUnescaped == false) {
@@ -35,7 +51,14 @@ class aw_base extends aw_supercfg
 		return $sParameter;
 	}
 
+    /**
+     * getAllParameter
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param array $aVar
+     * @return array
+     */
 	public function getAllParameter($aVar){
+
 		$aReturn = null;
 		foreach ($aVar as $key=>$value){
 			$aReturn[$key] = $this->getParameter($key);
@@ -43,5 +66,3 @@ class aw_base extends aw_supercfg
 		return $aReturn;
 	}
 }
-
-?>

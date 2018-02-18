@@ -41,7 +41,7 @@
 								{/if}
 							</div>
 							<div class="col-sm-6">
-								{$aProject.awdescription}<br>
+								{$aProject.awdescription|html_entity_decode}<br>
 							</div>
 							<div class="col-sm-4">
 								{if $aProject.awleader}{awmultilang ident="LEADER"}: {$oUser->getUserName($aProject.awleader)}<br>{/if}

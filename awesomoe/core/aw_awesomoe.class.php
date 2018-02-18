@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * Class aw_awesomoe
+ */
 class aw_awesomoe extends aw_supercfg
 {
+
+    /**
+     * aw_awesomoe constructor.
+     */
 	public function __construct() {
-		global $oDB,$smarty,$oConfig;
+
+	    global $oDB,$smarty,$oConfig;
 
 		$this->_oConfig = $oConfig;
 		$sTitle = $this->_oConfig->getConfigParam('sTitle');
@@ -15,19 +23,15 @@ class aw_awesomoe extends aw_supercfg
         $sSkin = $this->_oConfig->getConfigParam('sSkin');
         $iDays4NewTasks = $this->_oConfig->getConfigParam('iDays4NewTasks');
         $iDays4EndTime = $this->_oConfig->getConfigParam('iDays4EndTime');
-        $iAgileType = $this->_oConfig->getConfigParam('iAgileType');
-        $sVersion = $this->_oConfig->getConfigParam('sVersion');
 		$smarty->assign("sTitle", $sTitle);
 		$smarty->assign("sCopyright", $sCopyright);
 		$smarty->assign("sCopyrightLink", $sCopyrightLink);
 		$smarty->assign("sFooterInfo", $sFooterInfo);
-		$smarty->assign("sVersion", $sVersion);
 		$smarty->assign("sMailName", $sMailName);
 		$smarty->assign("sMailAdress", $sMailAdress);
 		$smarty->assign("sSkin", $sSkin);
 		$smarty->assign("iDays4NewTasks", $iDays4NewTasks);
 		$smarty->assign("iDays4EndTime", $iDays4EndTime);
-		$smarty->assign("iAgileType", $iAgileType);
 		$smarty->assign("tpldir", URL.'application/views/');
 		$smarty->assign("mainUrl", URL);
 		$smarty->assign("mediadir", URL.'media/');

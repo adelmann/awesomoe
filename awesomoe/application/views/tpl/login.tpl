@@ -27,13 +27,16 @@
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">{awmultilang ident="SIGNIN"}</p>
+        {if $loginError == true}
+            <div class="alert alert-danger" role="alert">{awmultilang ident="SIGNINERROR"}</div>
+        {/if}
         <form action="index.php" method="post">
 			<input type="hidden" name="login" value="1">
-			<div class="form-group has-feedback">
+			<div class="form-group has-feedback{if $loginError == true} has-error{/if}">
 				<input type="text" class="form-control" placeholder="{awmultilang ident="MAIL"}" name="mail" />
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 			</div>
-			<div class="form-group has-feedback">
+			<div class="form-group has-feedback{if $loginError == true} has-error{/if}">
 				<input type="password" class="form-control" placeholder="{awmultilang ident="PASSWORD"}" name="password" />
 				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 			</div>

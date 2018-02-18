@@ -5,6 +5,10 @@
  */
 class history extends aw_history
 {
+
+    /**
+     * history constructor.
+     */
     public function __construct()
     {
         parent::__construct();

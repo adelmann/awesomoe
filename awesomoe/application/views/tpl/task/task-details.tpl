@@ -75,8 +75,8 @@
 						<div class="row">
 							<div class="col-sm-8">
 								<h4>{$aTask.awtitle}</h4>
-								<p>{awmultilang ident="DESCRIPTION"}:</p>
-								{$aTask.awdescription|unescape:'html'}
+								{awmultilang ident="DESCRIPTION"}
+								{$aTask.awdescription}
 							</div>
 							<div class="col-sm-4">
 								{if $aTask.awprio}{awmultilang ident="PRIORITY"}: {$aTask.awname}<br>{/if}
@@ -209,7 +209,7 @@
 												{/if}
 												{$oUser->getUserName($activity.awpreval)}
 											{else}
-												{$activity.awpreval}
+												{$activity.awpreval|html_entity_decode}
 											{/if}
 
 
@@ -225,7 +225,7 @@
 												{/if}
 												{$oUser->getUserName($activity.awafterval)}
 											{else}
-												{$activity.awafterval}
+												{$activity.awafterval|html_entity_decode}
 											{/if}
 										</div>
 										<div class="col-sm-12">

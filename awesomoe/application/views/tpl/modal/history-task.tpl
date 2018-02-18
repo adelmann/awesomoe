@@ -38,10 +38,11 @@
 				{/if}
 				{$oUser->getUserName($history.awpreval)}
 			{else}
-				{$history.awpreval}
+				{$history.awpreval|html_entity_decode}
 			{/if}
+				
+			
 		</div>
-
 		<div class="col-sm-5">
 			{if $history.awfield == 'awworkflowpos'}
 				{foreach from=$aWorkflowSteps item=workflowitem }
@@ -53,7 +54,7 @@
 				{/if}
 				{$oUser->getUserName($history.awafterval)}
 			{else}
-				{$history.awafterval}
+				{$history.awafterval|html_entity_decode}
 			{/if}
 		</div>
 		<div class="col-sm-12">

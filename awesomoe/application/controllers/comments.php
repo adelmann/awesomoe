@@ -6,6 +6,9 @@
 class comments extends aw_comments
 {
 
+    /**
+     * comments constructor.
+     */
     public function __construct()
     {
         parent::__construct();

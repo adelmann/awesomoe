@@ -50,12 +50,11 @@
 								</tr>
 								<tr>
 								  <td class="text-right">{awmultilang ident="COUNTRY"}</td>
-								  <td>{awmultilang ident=$oUser->getCountryById($aActUser.awcountry)}
-								  </td>
+								  <td>{$aActUser.awcountry}</td>
 								</tr>
 								<tr>
 								  <td class="text-right">{awmultilang ident="COMPANY"}</td>
-								  <td>{$aActUser.awcompanyname}</td>
+								  <td>{$aActUser.awcompany}</td>
 								</tr>
 								<tr>
 								  <td class="text-right">{awmultilang ident="POSITION"}</td>

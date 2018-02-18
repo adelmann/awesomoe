@@ -1,15 +1,24 @@
 <?php
-class asbg_autoloader {
+
+/**
+ * Class asbg_autoloader
+ */
+class asbg_autoloader
+{
 	const BASE_DIR = __DIR__;
     const FILE_EXTENSION = '.class.php';
-		 
-    public static function autoload($className) {
-            $className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-            $filePath = asbg_autoloader::BASE_DIR . DIRECTORY_SEPARATOR . $className . asbg_autoloader::FILE_EXTENSION;
-			if (file_exists($filePath)) {
-                // Datei zur Klasse includen, falls sie denn existiert
-                include_once($filePath);
-            }
-        }
 
+    /**
+     * autoload
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param string $sClassName
+     */
+    public static function autoload($sClassName) {
+
+        $sClassName = str_replace('\\', DIRECTORY_SEPARATOR, $sClassName);
+        $sFilePath = asbg_autoloader::BASE_DIR . DIRECTORY_SEPARATOR . $sClassName . asbg_autoloader::FILE_EXTENSION;
+        if (file_exists($sFilePath)) {
+            include_once($sFilePath);
+        }
+    }
 }

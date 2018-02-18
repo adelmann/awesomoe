@@ -5,6 +5,10 @@
  */
 class notification extends aw_notification
 {
+
+    /**
+     * notification constructor.
+     */
     public function __construct()
     {
         parent::__construct();

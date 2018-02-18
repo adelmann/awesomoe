@@ -7,8 +7,7 @@
 		header('Location: setup/');
 	}
 	require 'config.php';
-    //include_once('core/aw_db.php');
-	
+
     include_once('core/aw_autoloader.php');
 	spl_autoload_register(array('asbg_autoloader', 'autoload'));
 
@@ -20,14 +19,12 @@
 
 	$oLang 			= new aw_lang();
 
-
 	$oDB 			= new aw_db();
 	$oUtils			= new aw_utils();
 	$oConfig 		= new aw_config();
 
 	$oAuth 			= new aw_auth();
 	$oUsers 		= new aw_users();
-	$oCompanys 		= new aw_companys();
 	$oMedia 		= new aw_media();
 	$oCalendar 		= new aw_calendar();
 	$oProjects 		= new aw_projects();
@@ -42,34 +39,34 @@
 	$oWorklog 		= new aw_worklog();
 	$oComments 		= new aw_comments();
 	$oReport 		= new aw_report();
-
-		if ($oAuth->checklogin() != true) {
-			$smarty->display('tpl/login.tpl');
+	$smarty->assign("loginError", false);
+	if ($oAuth->checklogin() != true) {
+		if ( isset($_SESSION['awLoginError']) && $_SESSION['awLoginError'] === true ) {
+			$smarty->assign("loginError", true);
+			unset($_SESSION['awLoginError']);
+		}
+		$smarty->display('tpl/login.tpl');
+	} else {
+		$smarty->assign("myTaskCount", $oTasks->countMyTasks());
+		$smarty->assign("myLastTasks", $oTasks->getLastWorkedTasks());
+		$smarty->assign("myNotificationCount", $oNotification->getNotificationCounter());
+		$smarty->assign("myNotifications", $oNotification->getAllNotification4User());
+		$smarty->assign("startinfos", $oUsers->getStartInfos());
+		$smarty->assign("myProjects", $oProjects->getProjects());
+		if ((empty($_GET) || empty($_GET['cl'])) && (empty($_POST) || empty($_POST['cl']))) {
+			$smarty->display('tpl/index.tpl');
 		} else {
-			$smarty->assign("myTaskCount", $oTasks->countMyTasks());
-			$smarty->assign("myLastTasks", $oTasks->getLastWorkedTasks());
-			$smarty->assign("myNotificationCount", $oNotification->getNotificationCounter());
-			$smarty->assign("myNotifications", $oNotification->getAllNotification4User());
-			$smarty->assign("startinfos", $oUsers->getStartInfos());
-			$smarty->assign("myProjects", $oProjects->getProjects());
-			if ((empty($_GET) || empty($_GET['cl'])) && (empty($_POST) || empty($_POST['cl']))) {
-				$smarty->display('tpl/index.tpl');
-			} else {
-				if (!empty($_GET)) {
-					$sClassName = $_GET['cl'];
-				} elseif (!empty($_POST)) {
-					$sClassName = $_POST['cl'];
-				}
-				$filePath = PATH . 'application/controllers/'. $sClassName . ".php";
-				if (file_exists($filePath)) {
-					include_once($filePath);
-					${"o".$sClassName} = new $sClassName;
-				}
+			if (!empty($_GET)) {
+				$sClassName = $_GET['cl'];
+			} elseif (!empty($_POST)) {
+				$sClassName = $_POST['cl'];
+			}
+			$filePath = PATH . 'application/controllers/'. $sClassName . ".php";
+			if (file_exists($filePath)) {
+				include_once($filePath);
+				${"o".$sClassName} = new $sClassName;
 			}
 		}
-		
-		//
-		
-		
-	
+	}
+
 ?>

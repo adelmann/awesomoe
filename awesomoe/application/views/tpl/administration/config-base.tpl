@@ -60,16 +60,6 @@
                                     <input type="text" placeholder="2" id="name" class="form-control" name="iDays4EndTime" value="{$iDays4EndTime}">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="agileView">{awmultilang ident="AGILETABLEDIVVIEW"}</label>
-                                    <div class="input-group">
-                                        <select class="form-control" name="iAgileType">
-                                            <option value="1"{if $iAgileType == '1'} selected="selected"{/if}>{awmultilang ident="AGILETABLE"}</option>
-                                            <option value="2"{if $iAgileType == '2'} selected="selected"{/if}>{awmultilang ident="AGILEDIV"}</option>
-                                        </select>
-                                    </div>
-                                </div>
-
 
 
                             </div><!-- /.box-body -->

@@ -6,6 +6,9 @@
 class workflows extends aw_workflows
 {
 
+    /**
+     * workflows constructor.
+     */
     public function __construct()
     {
         parent::__construct();

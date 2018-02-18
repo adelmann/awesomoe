@@ -5,7 +5,9 @@
  */
 class calendar extends aw_calendar
 {
-
+    /**
+     * calendar constructor.
+     */
     public function __construct()
     {
         parent::__construct();

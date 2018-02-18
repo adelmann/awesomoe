@@ -1,16 +1,29 @@
 <?php
+
+/**
+ * Class aw_breadcrumb
+ */
 class aw_breadcrumb extends aw_base
 {
+
+    /**
+     * aw_breadcrumb constructor.
+     */
 	public function __construct() {
+
 		parent::__construct();
 		global $smarty;
 		
 		$smarty->assign("aBreadCrumb", $this->getBreadCrumbPath());
-		
 	}
-	
-	
+
+    /**
+     * getBreadCrumbPath
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return array
+     */
 	public function getBreadCrumbPath() {
+
 		$aBreadcrumb = array();
 		$oProjects = new aw_projects();
 		$oTasks = new aw_tasks();

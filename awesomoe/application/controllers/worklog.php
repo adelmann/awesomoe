@@ -6,6 +6,9 @@
 class worklog extends aw_worklog
 {
 
+    /**
+     * worklog constructor.
+     */
     public function __construct()
     {
         parent::__construct();

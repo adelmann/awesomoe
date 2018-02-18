@@ -1,3 +1,5 @@
+#RewriteEngine On    # Turn on the rewriting engine
+#RewriteRule    ^task/([0-9]+)/?$    index.php?cl=tasklist&fnc=taskdetails&project=$1&task=$2    [NC,L]    # Handle product requests
 
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks

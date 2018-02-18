@@ -6,6 +6,9 @@
 class profile extends aw_users
 {
 
+    /**
+     * profile constructor.
+     */
     public function __construct()
     {
         parent::__construct();

@@ -1,37 +1,60 @@
 <?php
 
-
+/**
+ * Class aw_config
+ */
 class aw_config extends aw_supercfg
 {
 
 	protected $_aConfigParams = array();
-	
+
+    /**
+     * aw_config constructor.
+     */
 	public function __construct() {
+
 		global $oDB,$oConfig;
 		$this->_db = $oDB;
 		$this->loadVarsFromDB();
 			
 	}
-	
-	
-    public function getConfigParam( $sName )  {
+
+    /**
+     * getConfigParam
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param string $sName
+     * @return mixed
+     */
+    public function getConfigParam( $sName ) {
+
         if ( isset( $this->$sName ) ) {
             return $this->$sName;
         } elseif ( isset ( $this->_aConfigParams[$sName] ) ) {
             return $this->_aConfigParams[$sName];
         }
     }
-	
-	public function setConfigParam( $sName, $sValue )
-    {
+
+    /**
+     * setConfigParam
+     * -----------------------------------------------------------------------------------------------------------------
+     * @param string $sName
+     * @param string $sValue
+     */
+	public function setConfigParam( $sName, $sValue ) {
+
         if ( isset( $this->$sName ) ) {
             $this->$sName = $sValue;
         } else {
             $this->_aConfigParams[$sName] = $sValue;
         }
     }
-	
+
+    /**
+     * loadVarsFromDB
+     * -----------------------------------------------------------------------------------------------------------------
+     */
 	protected function loadVarsFromDB() {
+
 		$sSelectVars = "
 				SELECT * FROM awconfig
 		";
@@ -57,7 +80,13 @@ class aw_config extends aw_supercfg
         }
 	}
 
+    /**
+     * save
+     * -----------------------------------------------------------------------------------------------------------------
+     * @return bool
+     */
     protected function save() {
+
         unset($_POST['cl']);
         unset($_POST['fnc']);
         $oBase = new aw_base();
@@ -72,10 +101,9 @@ class aw_config extends aw_supercfg
             }
             catch(Exception $e){
                 $this->_db->rollback();
+                return false;
             };
         }
+        return true;
     }
-
 }
-
-?>

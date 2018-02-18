@@ -27,6 +27,7 @@ $aLang = array(
 'MEMBERSINCE'                            => 'Mitglied seid',
 'PROFILE'                                => 'Profil',
 'LOGOUT'                                 => 'ausloggen',
+'SIGNINERROR'                            => 'Falscher Benutzer oder falsches Passwort!',
 
 // SIDEBAR
 'MENU'                                   => 'Menü',

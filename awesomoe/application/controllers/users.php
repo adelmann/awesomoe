@@ -1,11 +1,14 @@
 <?php
-ini_set('error_reporting', E_ALL);
+
 /**
  * Class users
  */
 class users extends aw_users
 {
 
+    /**
+     * users constructor.
+     */
     public function __construct()
     {
         parent::__construct();

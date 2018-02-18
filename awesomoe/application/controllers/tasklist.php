@@ -8,6 +8,9 @@ class tasklist extends aw_tasks
 
     private $iProjectID;
 
+    /**
+     * tasklist constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -122,6 +125,11 @@ class tasklist extends aw_tasks
         }
     }
 
+    /**
+     * getRights4Projects
+     * -----------------------------------------------------------------------------------------------------------------
+     *
+     */
     protected function getRights4Projects()
     {
         global $oUsers;

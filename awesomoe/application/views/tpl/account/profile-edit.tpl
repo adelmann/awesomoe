@@ -98,11 +98,14 @@
 							</div>
 							<div class="form-group">
 								<label for="country">{awmultilang ident="COUNTRY"}</label>
-								{assign var=aAllCountrys value=$oUser->getAllCountrys()}
 								<select class="form-control" name="awcountry">
-									{foreach from=$aAllCountrys item=sCountryItem key=sKey}
-										<option value="{$sKey}"{if $aActUser.awcountry == $sKey} selected="selected"{/if}>{awmultilang ident=$sCountryItem}</option>
-									{/foreach}
+									<option value="1"{if $aActUser.awcountry == '1'} selected="selected"{/if}>{awmultilang ident="GERMANY"}</option>
+									<option value="2"{if $aActUser.awcountry == '2'} selected="selected"{/if}>{awmultilang ident="AUSTRIA"}</option>
+									<option value="3"{if $aActUser.awcountry == '3'} selected="selected"{/if}>{awmultilang ident="SWISS"}</option>
+									<option value="4"{if $aActUser.awcountry == '4'} selected="selected"{/if}>{awmultilang ident="FRANCE"}</option>
+									<option value="5"{if $aActUser.awcountry == '5'} selected="selected"{/if}>{awmultilang ident="SPAIN"}</option>
+									<option value="6"{if $aActUser.awcountry == '7'} selected="selected"{/if}>{awmultilang ident="UNITEDKINGDOM"}</option>
+									<option value="7"{if $aActUser.awcountry == '0' || empty($aActUser.awcountry)} selected="selected"{/if}>{awmultilang ident="NOTSETTED"}</option>
 								</select>
 							</div>
 							
