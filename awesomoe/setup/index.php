@@ -1,10 +1,13 @@
 <?php
+require __DIR__.'/../core/smarty/libs/Smarty.class.php';
 session_start();
 $run = new install();
 $run->init();
 
+
 class install
 {
+
 	protected $_alang;
 	protected $position = null;
 	protected $dberror = null;
@@ -13,9 +16,19 @@ class install
 	protected $database = null;
 	protected $username = null;
 	protected $password = null;
+    /**
+     * @var int
+     */
+	protected $erros;
+
+    /**
+     * @var $smarty smarty
+     */
+	protected $smarty;
 
 	public function init() {
-
+        define('PATH', __DIR__.'/../');
+        $this->setSmarty();
 		/* load language */
 		/* Default language for users */
 		$config['def_lang'] = 'de';
@@ -48,6 +61,8 @@ class install
 		if (!$this->position || $this->position == 1) {
 			include "step1.tpl";
 		} elseif($this->position == 2) {
+
+			$this->checkSystem();
 			include "step2.tpl";
 		} elseif($this->position == 3) {
 			include "step3.tpl";
@@ -240,5 +255,83 @@ class install
 		}
 		echo $this->_alang[$ident];
 	}
+
+	protected function setSmarty() {
+        $this->smarty = new Smarty;
+        $this->smarty->use_include_path = __DIR__.'/../';
+        $this->smarty->debugging = true;
+        $this->smarty->caching = false;
+        $this->smarty->cache_lifetime = 120;
+	}
+
+
+    protected function checkSystem() {
+        $errors = 0;
+        $this->smarty->assign('errors', $errors);
+        if (PHP_VERSION_ID < 50616) {
+            $errors++;
+            echo "<span class='label label-warning'>X</span> ";
+            $this->translateContent('PHP2LOW');
+        } else {
+            echo "<span class='label label-success'>√</span> ",
+            $this->translateContent('PHPOKAY');
+        }
+        if (is_writable('../media/')) {
+            echo '<p><span class="label label-success">√</span> ';
+            $this->translateContent('mediaCHMODOK');
+            echo '</p>';
+        } else {
+            $errors++;
+            echo '<p><span class="label label-danger">X</span> ';
+            $this->translateContent('mediaCHMODNO');
+            echo '</p>';
+        }
+
+        if (is_writable('../media/profile')) {
+            echo '<p><span class="label label-success">√</span> ';
+            $this->translateContent('mediapCHMODOK');
+            echo '</p>';
+        } else {
+            $errors++;
+            echo '<p><span class="label label-danger">X</span> ';
+            $this->translateContent('mediapCHMODNO');
+            echo '</p>';
+        }
+
+        if (is_writable('../media/projects')) {
+            echo '<p><span class="label label-success">√</span> ';
+            $this->translateContent('mediaproCHMODOK');
+            echo '</p>';
+        } else {
+            $errors++;
+            echo '<p><span class="label label-danger">X</span> ';
+            $this->translateContent('mediaproCHMODNO');
+            echo '</p>';
+        }
+
+        if (is_writable('../media/taskfiles')) {
+            echo '<p><span class="label label-success">√</span> ';
+            $this->translateContent('mediatasCHMODOK');
+            echo '</p>';
+        } else {
+            $errors++;
+            echo '<p><span class="label label-danger">X</span> ';
+            $this->translateContent('mediatasCHMODNO');
+            echo '</p>';
+        }
+
+        if (is_writable('../tmp')) {
+            echo '<p><span class="label label-success">√</span> ';
+            $this->translateContent('mediatmpCHMODOK');
+            echo '</p>';
+        } else {
+            $errors++;
+            echo '<p><span class="label label-danger">X</span> ';
+            $this->translateContent('mediatmpCHMODNO');
+            echo '</p>';
+        }
+        $this->smarty->assign('errors', $errors);
+        $this->errors = $errors;
+    }
 }
-?>
+
